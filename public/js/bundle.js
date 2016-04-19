@@ -9078,9 +9078,9 @@
 
 	exports.default = _react2.default.createElement(
 		_reactRouter.Route,
-		{ path: '/', component: _App2.default },
+		{ path: '/', component: _App2.default, name: 'Home' },
 		_react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
-		_react2.default.createElement(_reactRouter.Route, { path: '*', name: 'Not found', component: _NotFound2.default })
+		_react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default, name: 'Not found' })
 	);
 
 /***/ },
@@ -9098,6 +9098,16 @@
 	var _react = __webpack_require__(3);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(33);
+
+	var _NavMenu = __webpack_require__(230);
+
+	var _NavMenu2 = _interopRequireDefault(_NavMenu);
+
+	var _reactBreadcrumbs = __webpack_require__(231);
+
+	var _reactBreadcrumbs2 = _interopRequireDefault(_reactBreadcrumbs);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9123,11 +9133,59 @@
 					'div',
 					null,
 					_react2.default.createElement(
-						'h3',
-						null,
-						'Hello'
-					),
-					this.props.children
+						'div',
+						{ className: 'uk-grid' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'uk-width-small-2-3 uk-container-center uk-margin-large-top' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'uk-grid' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'uk-width-1-3' },
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: '/' },
+										_react2.default.createElement(
+											'span',
+											{ className: 'uk-badge uk-badge-success uk-text-large' },
+											'POS'
+										)
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'uk-width-2-3' },
+									_react2.default.createElement(_NavMenu2.default, null)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'uk-grid' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'uk-width-1-1' },
+									_react2.default.createElement(_reactBreadcrumbs2.default, { routes: this.props.routes,
+										params: this.props.params,
+										separator: '',
+										setDocumentTitle: true,
+										customClass: 'uk-breadcrumb',
+										wrapperElement: 'ul',
+										itemElement: 'li' })
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'uk-grid' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'uk-width-1-1' },
+									this.props.children
+								)
+							)
+						)
+					)
 				);
 			}
 		}]);
@@ -25647,6 +25705,147 @@
 	}(_react.Component);
 
 	exports.default = NotFound;
+
+/***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(33);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var NavMenu = function (_Component) {
+		_inherits(NavMenu, _Component);
+
+		function NavMenu() {
+			_classCallCheck(this, NavMenu);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(NavMenu).apply(this, arguments));
+		}
+
+		_createClass(NavMenu, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'ul',
+					{ className: 'uk-subnav uk-subnav-pill uk-float-right' },
+					_react2.default.createElement(
+						'li',
+						{ 'data-uk-dropdown': '{mode:\'click\'}' },
+						_react2.default.createElement(
+							'a',
+							{ href: '#' },
+							'Actions ',
+							_react2.default.createElement('i', { className: 'uk-icon-angle-down' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'uk-dropdown uk-dropdown-small' },
+							_react2.default.createElement(
+								'ul',
+								{ className: 'uk-nav uk-nav-dropdown' },
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: '/' },
+										_react2.default.createElement('i', { className: 'uk-icon-folder-o' }),
+										' action1'
+									)
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: '/' },
+										_react2.default.createElement('i', { className: 'uk-icon-folder-o' }),
+										' action2'
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return NavMenu;
+	}(_react.Component);
+
+	exports.default = NavMenu;
+
+/***/ },
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{"default":e}}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}var _createClass=function(){function e(e,t){for(var r=0;r<t.length;r++){var a=t[r];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}return function(t,r,a){return r&&e(t.prototype,r),a&&e(t,a),t}}(),_react=__webpack_require__(3),_react2=_interopRequireDefault(_react),_reactRouter=__webpack_require__(33),_exenv=__webpack_require__(232),_exenv2=_interopRequireDefault(_exenv),Breadcrumbs=function(e){function t(){_classCallCheck(this,t);var e=_possibleConstructorReturn(this,Object.getPrototypeOf(t).call(this));return e.displayName="Breadcrumbs",e}return _inherits(t,e),_createClass(t,[{key:"_getDisplayName",value:function(e){var t=null;return t=e.indexRoute?e.indexRoute.displayName||null:e.displayName||null,!t&&e.name&&(t=e.name),!t&&this.props.displayMissing&&(t=this.props.displayMissingText),t}},{key:"_resolveRouteName",value:function(e){var t=this._getDisplayName(e);return!t&&e.breadcrumbName&&(t=e.breadcrumbName),!t&&e.name&&(t=e.name),t}},{key:"_processRoute",value:function(e,t,r,a,s){var p=this;if(!e.path&&this.props.hideNoPath)return null;var n="",o="",i="",u=this._resolveRouteName(e);if(u&&"excludes"in this.props&&this.props.excludes.some(function(e){return e===u}))return null;var l=a;l&&(l=!!e.childRoutes,l=t!==r+1),n=t!==r+1?this.props.separator:"",l||(n=""),e.hasOwnProperty("breadcrumblink")&&(l=e.breadcrumblink),this.props.params&&(o=Object.keys(this.props.params).map(function(e){return i=e,p.props.params[e]}));var c=e.path.split("/")[e.path.split("/").length-1],h=void 0;if(e.path.split("/").map(function(t){if(":"==t.substring(0,1)&&p.props.params){h=Object.keys(p.props.params).map(function(e){return p.props.params[e]});var r=e.path.split("/").map(function(e){return":"==e.substring(0,1)?h.shift():e});e.path=r.reduce(function(e,t){return e+"/"+t}),e.staticName||":"!=c.substring(0,1)||(u=r.reduce(function(e,t){return t}))}}),u){if(this.props.prettify&&(u=u.replace(/-/g," "),u=u.replace(/\w\S*/g,function(e){return e.charAt(0).toUpperCase()+e.substr(1).toLowerCase()})),l)var f=s?_react2["default"].createElement(_reactRouter.Link,{to:e.path,params:e.params},u):u;else f=u;return s?_react2["default"].createElement(this.props.itemElement,{key:100*Math.random()},f,n):f}return null}},{key:"_buildRoutes",value:function(e,t){var r=this,a=[],s=e[1]&&e[1].hasOwnProperty("path"),p="/",n=[];return e.forEach(function(e,t){var a=JSON.parse(JSON.stringify(e));"props"in a&&"path"in a.props&&(a.path=a.props.path,a.children=a.props.children,a.name=a.props.name),a.path&&("/"===a.path.charAt(0)?p=a.path:("/"!==p.charAt(p.length-1)&&(p+="/"),p+=a.path)),t>0&&a.path&&"/"!==a.path.charAt(0)&&(a.path=p);var s=r._resolveRouteName(a);"excludes"in r.props&&r.props.excludes.some(function(e){return e===s})||n.push(a)}),e=n,e.map(function(n,o){if(!n)return null;"props"in n&&"path"in n.props&&(n.path=n.props.path,n.children=n.props.children,n.name=n.props.name),n.path&&("/"===n.path.charAt(0)?p=n.path:("/"!==p.charAt(p.length-1)&&(p+="/"),p+=n.path)),o>0&&n.path&&"/"!==n.path.charAt(0)&&(n.path=p);var i=r._processRoute(n,e.length,a.length,s,t);i&&a.push(i)}),_exenv2["default"].canUseDOM&&window&&window.document&&"setDocumentTitle"in this.props&&this.props.setDocumentTitle&&(window.document.title=a[a.length-1].props.children[0]),t?_react2["default"].createElement(this.props.wrapperElement,{className:this.props.customClass},a):a}},{key:"render",value:function(){var e=arguments.length<=0||void 0===arguments[0]?!0:arguments[0];return this._buildRoutes(this.props.routes,e)}}]),t}(_react2["default"].Component);Breadcrumbs.propTypes={separator:_react2["default"].PropTypes.string,displayMissing:_react2["default"].PropTypes.bool,prettify:_react2["default"].PropTypes.bool,displayMissingText:_react2["default"].PropTypes.string,displayName:_react2["default"].PropTypes.string,breadcrumbName:_react2["default"].PropTypes.string,wrapperElement:_react2["default"].PropTypes.string,itemElement:_react2["default"].PropTypes.string,customClass:_react2["default"].PropTypes.string,excludes:_react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.string),hideNoPath:_react2["default"].PropTypes.bool,routes:_react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.object).isRequired,setDocumentTitle:_react2["default"].PropTypes.bool},Breadcrumbs.defaultProps={separator:" > ",displayMissing:!0,displayMissingText:"Missing name prop from Route",wrapperElement:"div",itemElement:"span",customClass:"breadcrumbs",excludes:[""],prettify:!1,hideNoPath:!0,setDocumentTitle:!1},Breadcrumbs.contextTypes={routes:_react2["default"].PropTypes.array,params:_react2["default"].PropTypes.array},module.exports=Breadcrumbs;
+	//# sourceMappingURL=dist/react-breadcrumbs.min.js.map
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2015 Jed Watson.
+	  Based on code that is Copyright 2013-2015, Facebook, Inc.
+	  All rights reserved.
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var canUseDOM = !!(
+			typeof window !== 'undefined' &&
+			window.document &&
+			window.document.createElement
+		);
+
+		var ExecutionEnvironment = {
+
+			canUseDOM: canUseDOM,
+
+			canUseWorkers: typeof Worker !== 'undefined',
+
+			canUseEventListeners:
+				canUseDOM && !!(window.addEventListener || window.attachEvent),
+
+			canUseViewport: canUseDOM && !!window.screen
+
+		};
+
+		if (true) {
+			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return ExecutionEnvironment;
+			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else if (typeof module !== 'undefined' && module.exports) {
+			module.exports = ExecutionEnvironment;
+		} else {
+			window.ExecutionEnvironment = ExecutionEnvironment;
+		}
+
+	}());
+
 
 /***/ }
 /******/ ]);

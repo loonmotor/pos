@@ -5,8 +5,8 @@ import Home from './components/Home';
 import NotFound from './components/NotFound';
 
 export default (
-	<Route path="/" component={App}>
+	<Route path="/" component={App} name="Home">
 		<IndexRoute component={Home} />
-		<Route path="*" name="Not found" component={NotFound} />
+		<Route path="*" component={NotFound} name="Not found" />
 	</Route>
 );

@@ -1,0 +1,44 @@
+{
+    "routes": [
+        {
+            "path": "/",
+            "indexRoute": {},
+            "childRoutes": [
+                {
+                    "path": "*",
+                    "name": "Not found"
+                }
+            ]
+        },
+        {}
+    ],
+    "params": {},
+    "location": {
+        "pathname": "/",
+        "search": "",
+        "hash": "",
+        "state": null,
+        "action": "POP",
+        "key": "gii6ii",
+        "query": {},
+        "$searchBase": {
+            "search": "",
+            "searchBase": ""
+        }
+    },
+    "components": [
+        null,
+        null
+    ],
+    "history": {},
+    "router": {
+        "__v2_compatible__": true
+    },
+    "matchContext": {
+        "history": {},
+        "transitionManager": {},
+        "router": {
+            "__v2_compatible__": true
+        }
+    }
+}

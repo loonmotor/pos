@@ -3,8 +3,6 @@ import {Router, browserHistory} from 'react-router';
 import routes from './app/routes';
 import {render} from 'react-dom';
 
-console.log(process.argv);
-
 let handleCreateElement = (Component, props) => {
 	if ('requestInitialData' in Component) {
 		let initialData = document.getElementById('react-initial-data').textContent;

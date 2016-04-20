@@ -23,7 +23,7 @@ class Item extends Component {
 				'uk-width-1-1' : true,
 				'uk-form-danger' : false
 			})
-			, dirtyClass = classNames({
+			, isDirtyClass = classNames({
 				'uk-hidden' : !this.state.item.dirty
 			})
 			, nameRequiredClass = classNames({
@@ -48,7 +48,7 @@ class Item extends Component {
 							<label className="uk-form-label" htmlFor="name">Name</label>
 							<div className="uk-form-controls">
 								<input type="text" id="name" className={nameClass} onChange={this.handleFieldChange.bind(this, 'name')} autoFocus />
-								<section className={dirtyClass}>
+								<section className={isDirtyClass}>
 									<div className={nameRequiredClass}>This field is required</div>
 								</section>
 							</div>
@@ -57,7 +57,7 @@ class Item extends Component {
 							<label className="uk-form-label" htmlFor="price">Price</label>
 							<div className="uk-form-controls">
 								<input type="number" id="price" className={priceClass} onChange={this.handleFieldChange.bind(this, 'price')} />
-								<section className={dirtyClass}>
+								<section className={isDirtyClass}>
 									<div className={priceRequiredClass}>This field is required</div>
 								</section>
 							</div>
@@ -69,7 +69,7 @@ class Item extends Component {
 								<label>
 									<input type="checkbox" defaultChecked={true} value="upfront" />
 									Upfront Full
-									<section className={dirtyClass}>
+									<section className={isDirtyClass}>
 										<div className={paymentTypeRequiredClass}>This field is required</div>
 									</section>
 								</label>

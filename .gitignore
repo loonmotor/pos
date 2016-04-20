@@ -47,4 +47,3 @@ node_modules
 *.log
 *.json
 !package.json
-server-built

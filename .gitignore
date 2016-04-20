@@ -48,3 +48,4 @@ node_modules
 *.json
 !package.json
 server-built
+public/js/bundle.js

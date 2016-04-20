@@ -26013,7 +26013,7 @@
 /* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -26043,12 +26043,16 @@
 		}
 
 		_createClass(Item, [{
-			key: 'render',
+			key: "render",
 			value: function render() {
 				return _react2.default.createElement(
-					'div',
-					null,
-					'Create item here'
+					"div",
+					{ className: "uk-grid" },
+					_react2.default.createElement(
+						"div",
+						{ className: "uk-width-medium-4-5 uk-width-large-3-5 uk-container-center uk-margin-top" },
+						_react2.default.createElement("form", { className: "uk-form uk-form-stacked uk-margin-large-top" })
+					)
 				);
 			}
 		}]);

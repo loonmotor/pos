@@ -5,6 +5,7 @@ import restLogger from 'morgan';
 import path from 'path';
 import rootRoute from './routes/root';
 import itemRoute from './routes/item';
+import itemsRoute from './routes/items';
 import './setup/restfulApi';
 
 const
@@ -20,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended : false, limit : '1mb' }));
 app.use(bodyParser.json({ limit : '1mb' }));
 
 app.use('/data', itemRoute);
+app.use('/data', itemsRoute);
 
 app.use(express.static(path.join(__dirname, '../public'), {
 	maxAge : 0

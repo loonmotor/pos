@@ -32,3 +32,12 @@ restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
 	})
 });
 
+restfulApi.use('Items', 'GET', (resourceName, req, res, done) => {
+	db.Item.find({}).sort({ $natural : -1 }, (err, docs) => {
+		if (err) {
+			return done(err);
+		}
+		res.json(docs);
+		done();
+	});
+});

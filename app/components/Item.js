@@ -84,7 +84,7 @@ class Item extends Component {
 
 Item.getStores = () => [ItemStore];
 
-Item.calculateState = (prevState) => ({
+Item.calculateState = prevState => ({
 	item : ItemStore.getState()
 });
 

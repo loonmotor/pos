@@ -14,11 +14,11 @@ export default (
 		<Route path="item" component={Item} name="Create Item">
 			<Route path=":id" component={Item} name="Edit Item" />
 		</Route>
-		<Route path="items" component={Items} name="Items" />
+		<Route path="items" component={Items} name="Manage Items" />
 		<Route path="transaction" component={Transaction} name="Create Transaction">
 			<Route path=":id" component={Transaction} name="Edit Transaction" />
 		</Route>
-		<Route path="transactions" component={Transactions} name="Transactions" />
+		<Route path="transactions" component={Transactions} name="Manage Transactions" />
 		<Route path="*" component={NotFound} name="Not Found" />
 	</Route>
 );

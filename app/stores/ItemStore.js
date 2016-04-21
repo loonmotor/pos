@@ -20,7 +20,9 @@ class ItemStore extends ReduceStore {
 				upfront : true,
 				downpayment : false,
 				multiplepayments : false
-			}
+			},
+			created : null,
+			showNotification : false
 		};
 	}
 	reduce (state, action) {
@@ -65,8 +67,22 @@ class ItemStore extends ReduceStore {
 				});
 			case constants.SUBMIT_ITEM_SUCCESS :
 				if (!action.payload.response.errors) {
-					return this.getInitialState();
+					nextState = this.getInitialState();
+					return update(nextState, {
+						created : {
+							$set : action.payload.response
+						},
+						showNotification : {
+							$set : true
+						}
+					});
 				}
+			case constants.HIDE_NOTIFICATION :
+				return update(this.getState(), {
+					showNotification : {
+						$set : false
+					}
+				});
 			default :
 				return state;
 		}

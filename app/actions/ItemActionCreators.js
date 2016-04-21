@@ -22,5 +22,10 @@ export default {
 			success : constants.SUBMIT_ITEM_SUCCESS,
 			error   : constants.SUBMIT_ITEM_ERROR
 		});
+	},
+	hideNotification () {
+		AppDispatcher.dispatch({
+			type : constants.HIDE_NOTIFICATION
+		});
 	}
 };

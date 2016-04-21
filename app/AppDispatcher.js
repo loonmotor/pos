@@ -7,7 +7,7 @@ class AppDispatcher extends Dispatcher {
 	}
 	dispatchAsync (promise, actionNames, payload) {
 		const {request, success, error} = actionNames;
-		this.dispatch({ type : success, payload : Object.assign({}, payload) });
+		this.dispatch({ type : request, payload : Object.assign({}, payload) });
 		promise.then(
 			response => this.dispatch({ type : success, payload : Object.assign({}, payload, {response} )}),
 			error => this.dispatch({ type : error, payload : Object.assign({}, payload, {error}) })

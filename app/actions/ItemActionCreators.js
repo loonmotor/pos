@@ -1,5 +1,6 @@
 import constants from '../constants';
 import AppDispatcher from '../AppDispatcher';
+import ItemAPI from '../api/ItemAPI';
 
 export default {
 	editItemField (field, value) {
@@ -9,9 +10,17 @@ export default {
 			value
 		});
 	},
-	submitItem () {
+	togglePaymentType (paymentType) {
 		AppDispatcher.dispatch({
-			type : constants.SUBMIT_ITEM
+			type : constants.TOGGLE_PAYMENT_TYPE,
+			paymentType
+		});
+	},
+	submitItem (item) {
+		AppDispatcher.dispatchAsync(ItemAPI.submitItem(item), {
+			request : constants.SUBMIT_ITEM,
+			success : constants.SUBMIT_ITEM_SUCCESS,
+			error   : constants.SUBMIT_ITEM_ERROR
 		});
 	}
 };

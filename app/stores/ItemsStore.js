@@ -13,6 +13,10 @@ class ItemsStore extends ReduceStore {
 				return update(this.getState(), {
 					$set : action.payload.response
 				});
+			case constants.SET_ITEMS :
+				return update(this.getState(), {
+					$set : action.items
+				});
 			default :
 				return state;
 		}

@@ -2,13 +2,19 @@ import React, {Component} from 'react';
 import ItemsActionCreators from '../actions/ItemsActionCreators';
 import {Container} from 'flux/utils';
 import ItemsStore from '../stores/ItemsStore';
+import fetch from 'isomorphic-fetch';
 
 class Items extends Component {
+	constructor () {
+		super(...arguments);
+		ItemsActionCreators.setItems(this.props.initialData || []);
+	}
 	componentDidMount () {
-		ItemsActionCreators.fetchItems();
+		if (!this.props.initialData) {
+			Items.requestInitialData().then(items => ItemsActionCreators.setItems(items));
+		}
 	}
 	render () {
-		console.log(this.state.items);
 		return (
 			<div>
 				<div className="uk-grid">
@@ -43,6 +49,9 @@ class Items extends Component {
 	}
 }
 
+Items.requestInitialData = () => {
+	return fetch('http://localhost:3000/data/items').then(response => response.json());
+};
 Items.getStores = () => [ItemsStore];
 Items.calculateState = prevState => ({
 	items : ItemsStore.getState()

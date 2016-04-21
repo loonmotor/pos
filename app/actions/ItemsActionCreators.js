@@ -9,5 +9,11 @@ export default {
 			success : constants.FETCH_ITEMS_SUCCESS,
 			error   : constants.FETCH_ITEMS_ERROR
 		});
+	},
+	setItems (items) {
+		AppDispatcher.dispatch({
+			type : constants.SET_ITEMS,
+			items
+		});
 	}
 };

@@ -9,5 +9,8 @@ export default {
 			},
 			body : JSON.stringify(item)
 		}).then(response => response.json());
+	},
+	fetchItem (id) {
+		return fetch(`/data/item/${id}`).then(response => response.json());
 	}
 };

@@ -6,8 +6,20 @@ import ItemActionCreators from '../actions/ItemActionCreators';
 import ItemField from './ItemField';
 import ItemCheckbox from './ItemCheckbox';
 import ItemNotification from './ItemNotification';
+import fetch from 'isomorphic-fetch';
 
 class Item extends Component {
+	constructor () {
+		super(...arguments);
+		if (this.props.initialData) {
+			ItemActionCreators.setItem(this.props.initialData);
+		}
+	}
+	componentDidMount () {
+		if (!this.props.initialData && this.props.params.id) {
+			Item.requestInitialData({client:{id:this.props.params.id}}).then(data => ItemActionCreators.setItem(data));
+		}
+	}
 	handleItemSubmit (item, event) {
 		event.preventDefault();
 		ItemActionCreators.submitItem(item);
@@ -81,6 +93,20 @@ class Item extends Component {
 		);
 	}
 }
+
+Item.requestInitialData = ({server, client}) => {
+	if (server) {
+		const [,,id] = server.originalUrl;
+		if (id) {
+			return fetch(`http://localhost:3000/data/item/${id}`).then(response => response.json());
+		}
+		return Promise.reject('Create Item');
+	}
+	if (client) {
+		const {id} = client;
+		return fetch(`http://localhost:3000/data/item/${id}`).then(response => response.json());
+	}
+};
 
 Item.getStores = () => [ItemStore];
 

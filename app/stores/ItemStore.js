@@ -65,6 +65,9 @@ class ItemStore extends ReduceStore {
 						$set : true
 					}
 				});
+			case constants.SET_ITEM :
+				console.log(Object.assign({}, this.getState(), action.item));
+				return Object.assign({}, this.getState(), action.item);
 			case constants.SUBMIT_ITEM_SUCCESS :
 				if (!action.payload.response.errors) {
 					nextState = this.getInitialState();

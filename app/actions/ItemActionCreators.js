@@ -27,5 +27,11 @@ export default {
 		AppDispatcher.dispatch({
 			type : constants.HIDE_NOTIFICATION
 		});
+	},
+	setItem (item) {
+		AppDispatcher.dispatch({
+			type : constants.SET_ITEM,
+			item
+		});
 	}
 };

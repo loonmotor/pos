@@ -11,9 +11,8 @@ import Transactions from './components/Transactions';
 export default (
 	<Route path="/" component={App} name="Home">
 		<IndexRoute component={Home} />
-		<Route path="item" component={Item} name="Create Item">
-			<Route path=":id" component={Item} name="Edit Item" />
-		</Route>
+		<Route path="item" component={Item} name="Create Item" />
+		<Route path="item/:id" component={Item} name="Edit Item" />
 		<Route path="items" component={Items} name="Manage Items" />
 		<Route path="transaction" component={Transaction} name="Create Transaction">
 			<Route path=":id" component={Transaction} name="Edit Transaction" />

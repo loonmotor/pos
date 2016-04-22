@@ -1,5 +1,6 @@
 import restfulApi from '../modules/restfulApi';
 import db from './mongojs';
+import async from 'async';
 
 restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
 	const {name, price, paymentTypes, paymentTypes:{upfront, downpayment, multiplepayments}} = req.body;
@@ -33,11 +34,33 @@ restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
 });
 
 restfulApi.use('Items', 'GET', (resourceName, req, res, done) => {
-	db.Item.find({}).sort({ $natural : -1 }, (err, docs) => {
+	const {offset = 0, limit = 0} = req.params;
+	async.parallel({
+		count : (ok) => {
+			db.Item.count({}, (err, count) => {
+				if (err) {
+					return ok(err);
+				}
+				return ok(null, count);
+			});
+		},
+		items : (ok) => {
+			db.Item
+				.find({})
+				.skip(Number(offset) * Number(limit))
+				.limit(Number(limit))
+				.sort({ $natural : -1 }, (err, docs) => {
+					if (err) {
+						return ok(err);
+					}
+					return ok(null, docs);
+				});
+		}
+	}, (err, results) => {
 		if (err) {
 			return done(err);
 		}
-		res.json(docs);
+		res.json(results);
 		done();
 	});
 });

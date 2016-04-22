@@ -20,25 +20,27 @@ let getPropsFromRoute = ({routes}, componentProps) => {
 	return props;
 };
 
-let renderRoute = (res, routeObj) => {
+let renderRoute = (req, res, routeObj) => {
 	let routeProps = getPropsFromRoute(routeObj, ['requestInitialData']);
 	if (routeProps.requestInitialData) {
-		routeProps.requestInitialData().then(data => {
-			let handleCreateElement = (Component, props) => (
-				<Component initialData={data} {...props} />
-			);
-			try {
-				renderToString(<RouterContext createElement={handleCreateElement} {...routeObj} />);
-			} catch (err) {
-				console.log(err);
+		routeProps.requestInitialData({ server: { originalUrl : req.originalUrl.split('/') }}).then(
+			data => {
+				console.log(data);
+				let handleCreateElement = (Component, props) => (
+					<Component initialData={data} {...props} />
+				);
+				res.render('index', {
+					reactInitialData : JSON.stringify(data),
+					content : renderToString(<RouterContext createElement={handleCreateElement} {...routeObj} />)
+				});
+			}, 
+			error => {
+				res.render('index', {
+					reactInitialData : null,
+					content : renderToString(<RouterContext {...routeObj} />)
+				});
 			}
-			res.render('index', {
-				reactInitialData : JSON.stringify(data),
-				content : renderToString(<RouterContext createElement={handleCreateElement} {...routeObj} />)
-			});
-		}, error => {
-			res.send(error.message);
-		});
+		);
 	} else {
 		res.render('index', {
 			reactInitialData : null,
@@ -54,7 +56,7 @@ router.get('/', (req, res) => {
 		} else if (redirectLocation) {
 			res.redirect(302, redirectLocation.pathname + redirectLocation.search);
 		} else if (routeObj) {
-			renderRoute(res, routeObj);
+			renderRoute(req, res, routeObj);
 		} else {
 			res.status(404).send('Not found');
 		}

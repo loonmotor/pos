@@ -3,6 +3,6 @@ import restfulApi from '../modules/restfulApi';
 
 const router = express.Router();
 
-router.all('/items', restfulApi.restful('Items'));
+router.all('/items/:offset?/:limit?', restfulApi.restful('Items'));
 
 export default router;

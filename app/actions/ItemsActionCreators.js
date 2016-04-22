@@ -10,10 +10,16 @@ export default {
 			error   : constants.FETCH_ITEMS_ERROR
 		});
 	},
-	setItems (items) {
+	setItems (data) {
 		AppDispatcher.dispatch({
 			type : constants.SET_ITEMS,
-			items
+			data
+		});
+	},
+	setPaginationOffset (offset) {
+		AppDispatcher.dispatch({
+			type : constants.SET_PAGINATION_OFFSET,
+			offset
 		});
 	}
 };

@@ -18,10 +18,15 @@ class Item extends Component {
 	}
 	componentDidMount () {
 		if (!this.props.initialData && this.props.params.id) {
-			Item.requestInitialData({client:{id:this.props.params.id}}).then(data => {
-				ItemActionCreators.setItem(data);
-				ItemActionCreators.editMode();
-			});
+			Item.requestInitialData({client:{id:this.props.params.id}}).then(
+				data => {
+					ItemActionCreators.setItem(data);
+					ItemActionCreators.editMode();
+				},
+				error => {
+					ItemActionCreators.setItemError(error);
+				}
+			);
 		}
 	}
 	componentWillUnmount () {

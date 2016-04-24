@@ -29,6 +29,12 @@ export default {
 			item
 		});
 	},
+	setItemError (error) {
+		AppDispatcher.dispatch({
+			type : constants.SET_ITEM_ERROR,
+			payload : Object.assign({}, {error})
+		});
+	},
 	resetItem () {
 		AppDispatcher.dispatch({
 			type : constants.RESET_ITEM,

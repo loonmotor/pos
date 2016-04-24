@@ -11,8 +11,6 @@ class AppDispatcher extends Dispatcher {
 		promise.then(
 			response => this.dispatch({ type : success, payload : Object.assign({}, payload, {response} )}),
 			err => {
-				console.log('holala');
-				console.log(err);
 				this.dispatch({ type : error, payload : Object.assign({}, payload, {error : err}) });
 			}
 		);

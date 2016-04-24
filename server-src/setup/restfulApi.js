@@ -1,14 +1,18 @@
 import restfulApi from '../modules/restfulApi';
 import db from './mongojs';
 import async from 'async';
-import objectid from 'objectid';
 
 restfulApi.use('Item', 'GET', (resourceName, req, res, done) => {
 	const {id} = req.params;
-
-	db.Item.findOne({ _id : objectid(id) }, (err, doc) => {
+	console.log(id);
+	db.Item.findOne({ id }, (err, doc) => {
 		if (err) {
 			return done(err);
+		}
+		if (!doc) {
+			return done({
+				msg : 'Item not found'
+			});
 		}
 		res.json(doc);
 		done();
@@ -36,13 +40,14 @@ restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
 });
 
 restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
-	const {_id, name, price, paymentTypes, paymentTypes:{upfront, downpayment, multiplepayments}} = req.body;
-	if (_id) {
+	const {id, name, price, paymentTypes, paymentTypes:{upfront, downpayment, multiplepayments}, editMode} = req.body;
+	if (editMode) {
 		db.Item.findAndModify({
 			query : {
-				_id : objectid(_id)
+				id
 			},
 			update : {
+				id,
 				name,
 				price,
 				paymentTypes
@@ -52,6 +57,11 @@ restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
 			if (err) {
 				return done(err);
 			}
+			if (!doc) {
+				return done({
+					msg : 'Item not edited'
+				});
+			}
 			res.json({
 				msg : 'Item edited successfully',
 				doc : doc
@@ -60,12 +70,18 @@ restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
 		});
 	} else {
 		db.Item.insert({
+			id,
 			name,
 			price,
 			paymentTypes
 		}, (err, doc) => {
 			if (err) {
 				return done(err);
+			}
+			if (!doc) {
+				return done({
+					msg : 'Item not created'
+				});
 			}
 			res.json({
 				msg : 'Item created successfully',
@@ -80,7 +96,7 @@ restfulApi.use('Item', 'DELETE', (resourceName, req, res, done) => {
 	const {id} = req.body;
 	db.Item.findAndModify({
 		query : {
-			_id : objectid(id)
+			id
 		},
 		remove : true
 	}, (err, doc) => {

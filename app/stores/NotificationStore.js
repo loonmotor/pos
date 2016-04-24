@@ -7,7 +7,6 @@ class NotificationStore extends ReduceStore {
 		return {};
 	}
 	reduce (state, action) {
-		console.log(action);
 		if (action.type.indexOf('SUCCESS') > -1) {
 			return {
 				type : 'success',

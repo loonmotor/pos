@@ -62,7 +62,7 @@ class Items extends Component {
 										<td>{item.price}</td>
 										<td>
 											<div className="uk-button-group">
-												<Link to={`/item/${item._id}`} className="uk-button uk-button-mini"><i className="uk-icon-edit"></i> Edit</Link>
+												<Link to={`/item/${item.id}`} className="uk-button uk-button-mini"><i className="uk-icon-edit"></i> Edit</Link>
 												<a href="#" className="uk-button uk-button-mini" onClick={this.handleItemDelete.bind(this, item._id)}><i className="uk-icon-remove"></i> Delete</a>
 											</div>
 										</td>

@@ -12,7 +12,7 @@ export default {
 		}).then(checkStatus);
 	},
 	fetchItem (id) {
-		return fetch(`/data/item/${id}`).then(response => response.json());
+		return fetch(`/data/item/${id}`).then(checkStatus);
 	},
 	deleteItem (id) {
 		return fetch('/data/item', {

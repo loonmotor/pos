@@ -6,22 +6,23 @@ import update from 'react-addons-update';
 class ItemStore extends ReduceStore {
 	getInitialState () {
 		return {
+			id : Date.now().toString(),
 			name : '',
 			price : '',
+			paymentTypes : {
+				upfront : true,
+				downpayment : false,
+				multiplepayments : false
+			},
 			dirty : false,
+			editMode : false,
 			error : {
 				required : {
 					name : true,
 					price : true,
 					paymentType : false
 				}
-			},
-			paymentTypes : {
-				upfront : true,
-				downpayment : false,
-				multiplepayments : false
-			},
-			created : null
+			}
 		};
 	}
 	reduce (state, action) {
@@ -66,14 +67,6 @@ class ItemStore extends ReduceStore {
 				});
 			case constants.SET_ITEM :
 				return Object.assign({}, this.getState(), action.item);
-			case constants.SUBMIT_ITEM_SUCCESS :
-				if (!action.payload.response.errors) {
-					return update(this.getState(), {
-						created : {
-							$set : action.payload.response
-						}
-					});
-				}
 			case constants.RESET_ITEM :
 				return this.getInitialState();
 			case constants.EDIT_MODE :
@@ -87,6 +80,9 @@ class ItemStore extends ReduceStore {
 								$set : false
 							}
 						}
+					},
+					editMode : {
+						$set : true
 					}
 				});
 			case constants.DELETE_ITEM_ERROR :

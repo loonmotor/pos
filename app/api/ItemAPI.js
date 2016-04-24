@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import {checkStatus} from '../utils';
 
 export default {
 	submitItem (item) {
@@ -8,9 +9,18 @@ export default {
 				'Content-Type' : 'application/json'
 			},
 			body : JSON.stringify(item)
-		}).then(response => response.json());
+		}).then(checkStatus);
 	},
 	fetchItem (id) {
 		return fetch(`/data/item/${id}`).then(response => response.json());
+	},
+	deleteItem (id) {
+		return fetch('/data/item', {
+			method : 'DELETE',
+			headers : {
+				'Content-Type' : 'application/json'
+			},
+			body : JSON.stringify({id})
+		}).then(checkStatus);
 	}
 };

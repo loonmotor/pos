@@ -18,7 +18,6 @@ class ItemsStore extends ReduceStore {
 	reduce (state, action) {
 		switch (action.type) {
 			case constants.FETCH_ITEMS_SUCCESS :
-				console.log(action.payload.response);
 				return update(this.getState(), {
 					items : {
 						$set : action.payload.response.items

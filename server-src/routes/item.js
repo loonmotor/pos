@@ -3,6 +3,6 @@ import restfulApi from '../modules/restfulApi';
 
 const router = express.Router();
 
-router.all('/item', restfulApi.restful('Item'));
+router.all('/item/:id?', restfulApi.restful('Item'));
 
 export default router;

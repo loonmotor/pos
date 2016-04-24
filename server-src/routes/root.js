@@ -25,7 +25,6 @@ let renderRoute = (req, res, routeObj) => {
 	if (routeProps.requestInitialData) {
 		routeProps.requestInitialData({ server: { originalUrl : req.originalUrl.split('/') }}).then(
 			data => {
-				console.log(data);
 				let handleCreateElement = (Component, props) => (
 					<Component initialData={data} {...props} />
 				);
@@ -35,6 +34,7 @@ let renderRoute = (req, res, routeObj) => {
 				});
 			}, 
 			error => {
+				console.log('render lar');
 				res.render('index', {
 					reactInitialData : null,
 					content : renderToString(<RouterContext {...routeObj} />)

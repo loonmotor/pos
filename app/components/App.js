@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import NavMenu from './NavMenu';
 import Breadcrumbs from 'react-breadcrumbs';
+import Notification from './Notification';
 
 class App extends Component {
 	render () {
@@ -37,6 +38,8 @@ class App extends Component {
 						</div>
 					</div>
 				</div>
+
+				<Notification />
 			</div>
 		);
 	}

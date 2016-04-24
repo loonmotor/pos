@@ -23,15 +23,27 @@ export default {
 			error   : constants.SUBMIT_ITEM_ERROR
 		});
 	},
-	hideNotification () {
-		AppDispatcher.dispatch({
-			type : constants.HIDE_NOTIFICATION
-		});
-	},
 	setItem (item) {
 		AppDispatcher.dispatch({
 			type : constants.SET_ITEM,
 			item
+		});
+	},
+	resetItem () {
+		AppDispatcher.dispatch({
+			type : constants.RESET_ITEM,
+		});
+	},
+	editMode () {
+		AppDispatcher.dispatch({
+			type : constants.EDIT_MODE
+		});
+	},
+	deleteItem (id) {
+		AppDispatcher.dispatchAsync(ItemAPI.deleteItem(id), {
+			request : constants.DELETE_ITEM,
+			success : constants.DELETE_ITEM_SUCCESS,
+			error   : constants.DELETE_ITEM_ERROR
 		});
 	}
 };

@@ -1,36 +1,98 @@
 import restfulApi from '../modules/restfulApi';
 import db from './mongojs';
 import async from 'async';
+import objectid from 'objectid';
+
+restfulApi.use('Item', 'GET', (resourceName, req, res, done) => {
+	const {id} = req.params;
+
+	db.Item.findOne({ _id : objectid(id) }, (err, doc) => {
+		if (err) {
+			return done(err);
+		}
+		res.json(doc);
+		done();
+	});
+});
 
 restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
-	const {name, price, paymentTypes, paymentTypes:{upfront, downpayment, multiplepayments}} = req.body;
-	const errors = [];
-	if (!name) {
-		errors.push({ field : 'name', message : 'Name is required' });
+	const {name, price, paymentTypes, paymentTypes:{upfront, downpayment, multiplepayments}} = req.body
+	const errors = {};
+	if (!name) { errors.name = 'Name is required'; }
+	if (!price) { errors.price = 'Price is required'; }
+	if (!paymentTypes) {
+		errors.paymentTypes = 'Payment types is required';
 	}
-	if (!price) {
-		errors.push({ field : 'price', message : 'Price is required' });
+	if (paymentTypes) {
+		if (!upfront && !downpayment && !!multiplepayments) { errors.paymentTypes = 'At least a payment type is required'; }
 	}
-	if (!upfront && !downpayment && !multiplepayments) {
-		erros.push({ field : 'paymentType', message : 'Payment type is required' });
-	}
-	if (errors.length > 0) {
-		res.json({
-			errors
+	if (Object.keys(errors).length > 0) {
+		return done({
+			msg : 'There are errors',
+			error : errors
 		});
-		return done();
 	}
-	db.Item.insert({
-		name,
-		price,
-		paymentTypes
+	done();
+});
+
+restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
+	const {_id, name, price, paymentTypes, paymentTypes:{upfront, downpayment, multiplepayments}} = req.body;
+	if (_id) {
+		db.Item.findAndModify({
+			query : {
+				_id : objectid(_id)
+			},
+			update : {
+				name,
+				price,
+				paymentTypes
+			},
+			new : true
+		}, (err, doc) => {
+			if (err) {
+				return done(err);
+			}
+			res.json({
+				msg : 'Item edited successfully',
+				doc : doc
+			});
+			return done();
+		});
+	} else {
+		db.Item.insert({
+			name,
+			price,
+			paymentTypes
+		}, (err, doc) => {
+			if (err) {
+				return done(err);
+			}
+			res.json({
+				msg : 'Item created successfully',
+				doc : doc
+			});
+			return done();
+		});
+	}
+});
+
+restfulApi.use('Item', 'DELETE', (resourceName, req, res, done) => {
+	const {id} = req.body;
+	db.Item.findAndModify({
+		query : {
+			_id : objectid(id)
+		},
+		remove : true
 	}, (err, doc) => {
 		if (err) {
 			return done(err);
 		}
-		res.send(doc);
+		res.json({
+			msg : 'Item deleted successfully',
+			doc
+		})
 		done();
-	})
+	});
 });
 
 restfulApi.use('Items', 'GET', (resourceName, req, res, done) => {

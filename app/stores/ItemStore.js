@@ -21,8 +21,7 @@ class ItemStore extends ReduceStore {
 				downpayment : false,
 				multiplepayments : false
 			},
-			created : null,
-			showNotification : false
+			created : null
 		};
 	}
 	reduce (state, action) {
@@ -66,26 +65,33 @@ class ItemStore extends ReduceStore {
 					}
 				});
 			case constants.SET_ITEM :
-				console.log(Object.assign({}, this.getState(), action.item));
 				return Object.assign({}, this.getState(), action.item);
 			case constants.SUBMIT_ITEM_SUCCESS :
 				if (!action.payload.response.errors) {
-					nextState = this.getInitialState();
-					return update(nextState, {
+					return update(this.getState(), {
 						created : {
 							$set : action.payload.response
-						},
-						showNotification : {
-							$set : true
 						}
 					});
 				}
-			case constants.HIDE_NOTIFICATION :
+			case constants.RESET_ITEM :
+				return this.getInitialState();
+			case constants.EDIT_MODE :
 				return update(this.getState(), {
-					showNotification : {
-						$set : false
+					error : {
+						required : {
+							name : {
+								$set : false
+							},
+							price : {
+								$set : false
+							}
+						}
 					}
 				});
+			case constants.DELETE_ITEM_ERROR :
+				console.log('delete item error');
+				return state;
 			default :
 				return state;
 		}

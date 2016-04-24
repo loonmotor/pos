@@ -5,20 +5,27 @@ import ItemStore from '../stores/ItemStore';
 import ItemActionCreators from '../actions/ItemActionCreators';
 import ItemField from './ItemField';
 import ItemCheckbox from './ItemCheckbox';
-import ItemNotification from './ItemNotification';
 import fetch from 'isomorphic-fetch';
+import {checkStatus} from '../utils';
 
 class Item extends Component {
 	constructor () {
 		super(...arguments);
 		if (this.props.initialData) {
 			ItemActionCreators.setItem(this.props.initialData);
+			ItemActionCreators.editMode();
 		}
 	}
 	componentDidMount () {
 		if (!this.props.initialData && this.props.params.id) {
-			Item.requestInitialData({client:{id:this.props.params.id}}).then(data => ItemActionCreators.setItem(data));
+			Item.requestInitialData({client:{id:this.props.params.id}}).then(data => {
+				ItemActionCreators.setItem(data);
+				ItemActionCreators.editMode();
+			});
 		}
+	}
+	componentWillUnmount () {
+		ItemActionCreators.resetItem();
 	}
 	handleItemSubmit (item, event) {
 		event.preventDefault();
@@ -77,14 +84,6 @@ class Item extends Component {
 								<button className="uk-button" disabled={gotError && this.state.item.dirty}>Save</button>
 							</div>
 
-							<div className="uk-form-row">
-								{this.state.item.created ?
-									(
-										<ItemNotification id={this.state.item.created._id} showNotification={this.state.item.showNotification} />
-									) :
-									''
-								}
-							</div>
 						</fieldset>
 					</form>
 
@@ -98,13 +97,15 @@ Item.requestInitialData = ({server, client}) => {
 	if (server) {
 		const [,,id] = server.originalUrl;
 		if (id) {
-			return fetch(`http://localhost:3000/data/item/${id}`).then(response => response.json());
+			return fetch(`http://localhost:3000/data/item/${id}`)
+					.then(checkStatus);
 		}
 		return Promise.reject('Create Item');
 	}
 	if (client) {
 		const {id} = client;
-		return fetch(`http://localhost:3000/data/item/${id}`).then(response => response.json());
+		return fetch(`http://localhost:3000/data/item/${id}`)
+				.then(checkStatus);
 	}
 };
 

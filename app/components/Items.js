@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import ItemsActionCreators from '../actions/ItemsActionCreators';
+import ItemActionCreators from '../actions/ItemActionCreators';
 import {Container} from 'flux/utils';
 import ItemsStore from '../stores/ItemsStore';
 import fetch from 'isomorphic-fetch';
 import ReactPaginate from 'react-paginate';
+import {Link} from 'react-router';
 
 class Items extends Component {
 	constructor () {
@@ -25,6 +27,10 @@ class Items extends Component {
 		ItemsActionCreators.setPaginationOffset(offset);
 		Items.requestInitialData({client:{offset, limit}}).then(data => ItemsActionCreators.setItems(data)); 
 	}
+	handleItemDelete (id, event) {
+		event.preventDefault();
+		ItemActionCreators.deleteItem(id);
+	}
 	componentWillUnmount () {
 		ItemsActionCreators.setPaginationOffset(0);
 	}
@@ -45,7 +51,7 @@ class Items extends Component {
 									<th>No</th>
 									<th>Name</th>
 									<th>Price</th>
-									<th colSpan="2" className="uk-text-center">Actions</th>
+									<th className="uk-text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -54,11 +60,10 @@ class Items extends Component {
 										<td>{index + 1 + offset * limit}</td>
 										<td>{item.name}</td>
 										<td>{item.price}</td>
-										<td>{item.price}</td>
 										<td>
 											<div className="uk-button-group">
-												<a href="#" className="uk-button uk-button-mini"><i className="uk-icon-edit"></i> Edit</a>
-												<a href="#" className="uk-button uk-button-mini"><i className="uk-icon-remove"></i> Delete</a>
+												<Link to={`/item/${item._id}`} className="uk-button uk-button-mini"><i className="uk-icon-edit"></i> Edit</Link>
+												<a href="#" className="uk-button uk-button-mini" onClick={this.handleItemDelete.bind(this, item._id)}><i className="uk-icon-remove"></i> Delete</a>
 											</div>
 										</td>
 									</tr>

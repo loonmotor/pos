@@ -18,15 +18,19 @@ class Item extends Component {
 	}
 	componentDidMount () {
 		if (!this.props.initialData && this.props.params.id) {
-			Item.requestInitialData({client:{id:this.props.params.id}}).then(
-				data => {
-					ItemActionCreators.setItem(data);
-					ItemActionCreators.editMode();
-				},
-				error => {
-					ItemActionCreators.setItemError(error);
-				}
-			);
+			setTimeout(() => {
+				ItemActionCreators.displayItem(this.props.params.id);
+				ItemActionCreators.editMode();
+			}, 0);
+			// Item.requestInitialData({client:{id:this.props.params.id}}).then(
+			// 	data => {
+			// 		ItemActionCreators.setItem(data);
+			// 		ItemActionCreators.editMode();
+			// 	},
+			// 	error => {
+			// 		ItemActionCreators.setItemError(error);
+			// 	}
+			// );
 		}
 	}
 	componentWillUnmount () {
@@ -116,8 +120,11 @@ Item.requestInitialData = ({server, client}) => {
 
 Item.getStores = () => [ItemStore];
 
-Item.calculateState = prevState => ({
-	item : ItemStore.getState()
-});
+Item.calculateState = prevState => {
+	console.log('ada ada');
+	return {
+		item : ItemStore.getState()
+	}
+};
 
 export default Container.create(Item);

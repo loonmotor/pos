@@ -15,6 +15,12 @@ class ItemsStore extends ReduceStore {
 			items : []
 		};
 	}
+	getItemIndex (id) {
+		return this._state.items.findIndex(item => item.id === id);
+	}
+	getItem (id) {
+		return this._state.items[this.getItemIndex(id)];
+	}
 	reduce (state, action) {
 		switch (action.type) {
 			case constants.FETCH_ITEMS_SUCCESS :
@@ -51,6 +57,19 @@ class ItemsStore extends ReduceStore {
 						offset : {
 							$set : action.offset
 						}
+					}
+				});
+			case constants.SUBMIT_ITEM :
+				if (action.payload.editMode) {
+					return update(this.getState(), {
+						items : {
+							$splice : [[this.getItemIndex(action.payload.id), 1, action.payload]]
+						}
+					});
+				}
+				return update(this.getState(), {
+					items : {
+						$unshift : [action.payload]
 					}
 				});
 			default :

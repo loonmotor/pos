@@ -21,7 +21,7 @@ export default {
 			request : constants.SUBMIT_ITEM,
 			success : constants.SUBMIT_ITEM_SUCCESS,
 			error   : constants.SUBMIT_ITEM_ERROR
-		});
+		}, item);
 	},
 	setItem (item) {
 		AppDispatcher.dispatch({
@@ -50,6 +50,12 @@ export default {
 			request : constants.DELETE_ITEM,
 			success : constants.DELETE_ITEM_SUCCESS,
 			error   : constants.DELETE_ITEM_ERROR
+		});
+	},
+	displayItem (id) {
+		AppDispatcher.dispatch({
+			type : constants.DISPLAY_ITEM,
+			id
 		});
 	}
 };

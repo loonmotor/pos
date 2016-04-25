@@ -56,14 +56,14 @@ class Items extends Component {
 							</thead>
 							<tbody>
 								{items.map((item, index) => (
-									<tr key={item._id}>
+									<tr key={item.id}>
 										<td>{index + 1 + offset * limit}</td>
 										<td>{item.name}</td>
 										<td>{item.price}</td>
 										<td>
 											<div className="uk-button-group">
 												<Link to={`/item/${item.id}`} className="uk-button uk-button-mini"><i className="uk-icon-edit"></i> Edit</Link>
-												<a href="#" className="uk-button uk-button-mini" onClick={this.handleItemDelete.bind(this, item._id)}><i className="uk-icon-remove"></i> Delete</a>
+												<a href="#" className="uk-button uk-button-mini" onClick={this.handleItemDelete.bind(this, item.id)}><i className="uk-icon-remove"></i> Delete</a>
 											</div>
 										</td>
 									</tr>

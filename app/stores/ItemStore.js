@@ -2,11 +2,13 @@ import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import constants from '../constants';
 import update from 'react-addons-update';
+import ItemsStore from './ItemsStore';
+import shortid from 'shortid';
 
 class ItemStore extends ReduceStore {
 	getInitialState () {
 		return {
-			id : Date.now().toString(),
+			id : shortid.generate(),
 			name : '',
 			price : '',
 			paymentTypes : {
@@ -88,6 +90,8 @@ class ItemStore extends ReduceStore {
 			case constants.DELETE_ITEM_ERROR :
 				console.log('delete item error');
 				return state;
+			case constants.DISPLAY_ITEM :
+				return Object.assign({}, this.getState(), ItemsStore.getItem(action.id));
 			default :
 				return state;
 		}

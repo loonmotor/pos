@@ -72,6 +72,14 @@ class ItemsStore extends ReduceStore {
 						$unshift : [action.payload]
 					}
 				});
+			case constants.DELETE_ITEM :
+				console.log(action.payload.id);
+				console.log(this.getItemIndex(action.payload.id));
+				return update(this.getState(), {
+					items : {
+						$splice : [[this.getItemIndex(action.payload.id), 1]]
+					}
+				});
 			default :
 				return state;
 		}

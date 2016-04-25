@@ -50,7 +50,7 @@ export default {
 			request : constants.DELETE_ITEM,
 			success : constants.DELETE_ITEM_SUCCESS,
 			error   : constants.DELETE_ITEM_ERROR
-		});
+		}, {id});
 	},
 	displayItem (id) {
 		AppDispatcher.dispatch({

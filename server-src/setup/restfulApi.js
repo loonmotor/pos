@@ -142,3 +142,19 @@ restfulApi.use('Items', 'GET', (resourceName, req, res, done) => {
 		done();
 	});
 });
+
+restfulApi.use('HeartBeat', 'GET', (resourceName, req, res, done) => {
+	res.writeHead({
+		'Connection' : 'keep-alive',
+		'Content-Type' : 'text/event-stream',
+		'Cache-Control' : 'no-cache'
+	});
+
+	setInterval(() => {
+		console.log('sending heart beat');
+		res.write('event: heartbeat\n data: {"beating":"beating"}\n\n');
+	}, 2000);
+
+	done();
+
+});

@@ -120,11 +120,8 @@ Item.requestInitialData = ({server, client}) => {
 
 Item.getStores = () => [ItemStore];
 
-Item.calculateState = prevState => {
-	console.log('ada ada');
-	return {
-		item : ItemStore.getState()
-	}
-};
+Item.calculateState = prevState => ({
+	item : ItemStore.getState()
+});
 
 export default Container.create(Item);

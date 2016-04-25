@@ -6,7 +6,9 @@ import path from 'path';
 import rootRoute from './routes/root';
 import itemRoute from './routes/item';
 import itemsRoute from './routes/items';
+import heartBeatRoute from './routes/heartBeat';
 import './setup/restfulApi';
+import SSE from 'sse';
 
 const
 	app = express();
@@ -22,6 +24,7 @@ app.use(bodyParser.json({ limit : '1mb' }));
 
 app.use('/data', itemRoute);
 app.use('/data', itemsRoute);
+app.use('/heart-beat', heartBeatRoute);
 
 app.use(express.static(path.join(__dirname, '../public'), {
 	maxAge : 0
@@ -29,4 +32,22 @@ app.use(express.static(path.join(__dirname, '../public'), {
 
 app.use('*', rootRoute);
 
-app.listen(3000);
+const server = app.listen(3000);
+
+const sse = new SSE(server);
+
+sse.on('connection', connection => {
+	console.log('new connection');
+	const intervalId = setInterval(() => {
+		connection.send({
+			event : 'heartbeat',
+			data : Date.now().toString()
+		});
+	}, 1000);
+
+	connection.on('close', () => {
+		console.log('lost connection');
+		clearInterval(intervalId);
+	});
+});
+

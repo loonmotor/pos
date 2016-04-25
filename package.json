@@ -12,6 +12,7 @@
     "body-parser": "^1.15.0",
     "classnames": "^2.2.3",
     "ejs": "^2.4.1",
+    "eventsource": "^0.2.1",
     "express": "^4.13.4",
     "flux": "^2.1.1",
     "mongojs": "^2.3.0",
@@ -25,6 +26,7 @@
     "react-paginate": "^1.0.3",
     "react-router": "^2.3.0",
     "shortid": "^2.2.6",
+    "sse": "0.0.6",
     "validate": "^3.0.1",
     "whatwg-fetch": "^0.11.0"
   },

@@ -21,5 +21,8 @@ export default {
 
 	'EDIT_MODE' : 'EDIT_MODE',
 
-	'DISPLAY_ITEM' : 'DISPLAY_ITEM'
+	'DISPLAY_ITEM' : 'DISPLAY_ITEM',
+
+	'ONLINE' : 'ONLINE',
+	'OFFLINE' : 'OFFLINE'
 };

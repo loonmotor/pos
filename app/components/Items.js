@@ -17,7 +17,7 @@ class Items extends Component {
 	componentDidMount () {
 		const {meta:{offset, limit}} = this.state.data;
 		if (!this.props.initialData) {
-			Items.requestInitialData({client : {offset, limit}}).then(data => ItemsActionCreators.setItems(data)); 
+			ItemsActionCreators.fetchItems(Items.requestInitialData.bind(null, {client : {offset, limit}}));
 		}
 	}
 	handlePageClick (data, event) {
@@ -25,7 +25,7 @@ class Items extends Component {
 		const offset = data.selected;
 
 		ItemsActionCreators.setPaginationOffset(offset);
-		Items.requestInitialData({client:{offset, limit}}).then(data => ItemsActionCreators.setItems(data)); 
+		ItemsActionCreators.fetchItems(Items.requestInitialData.bind(null, {client:{offset, limit}}));
 	}
 	handleItemDelete (id, event) {
 		event.preventDefault();

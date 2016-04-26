@@ -11,5 +11,10 @@ export default {
 		AppDispatcher.dispatch({
 			type : constants.OFFLINE
 		});
+	},
+	resetActionCreators () {
+		AppDispatcher.dispatch({
+			type : constants.RESET_ACTION_CREATORS
+		});
 	}
 };

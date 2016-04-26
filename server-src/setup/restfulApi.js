@@ -41,55 +41,35 @@ restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
 
 restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
 	const {id, name, price, paymentTypes, paymentTypes:{upfront, downpayment, multiplepayments}, editMode} = req.body;
-	if (editMode) {
-		db.Item.findAndModify({
-			query : {
-				id
-			},
-			update : {
-				id,
-				name,
-				price,
-				paymentTypes
-			},
-			new : true
-		}, (err, doc) => {
-			if (err) {
-				return done(err);
-			}
-			if (!doc) {
-				return done({
-					msg : 'Item not edited'
-				});
-			}
-			res.json({
-				msg : 'Item edited successfully',
-				doc : doc
-			});
-			return done();
-		});
-	} else {
-		db.Item.insert({
+
+	db.Item.findAndModify({
+		query : {
+			id
+		},
+		update : {
 			id,
 			name,
 			price,
 			paymentTypes
-		}, (err, doc) => {
-			if (err) {
-				return done(err);
-			}
-			if (!doc) {
-				return done({
-					msg : 'Item not created'
-				});
-			}
-			res.json({
-				msg : 'Item created successfully',
-				doc : doc
+		},
+		new : true,
+		upsert : true
+	}, (err, doc, {updatedExisting}) => {
+		if (err) {
+			return done(err);
+		}
+		if (!doc) {
+			return done({
+				msg : updatedExisting ? 'Item not edited' : 'Item not created'
 			});
-			return done();
+		}
+		res.json({
+			msg : updatedExisting ? 'Item edited successfully' : 'Item created successfully',
+			doc : doc
 		});
-	}
+		return done();
+	});
+
 });
 
 restfulApi.use('Item', 'DELETE', (resourceName, req, res, done) => {

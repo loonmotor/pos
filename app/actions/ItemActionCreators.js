@@ -2,7 +2,7 @@ import constants from '../constants';
 import AppDispatcher from '../AppDispatcher';
 import ItemAPI from '../api/ItemAPI';
 
-export default {
+const actionCreators = {
 	editItemField (field, value) {
 		AppDispatcher.dispatch({
 			type : constants.EDIT_ITEM_FIELD,
@@ -17,11 +17,12 @@ export default {
 		});
 	},
 	submitItem (item) {
+		let submitItemBinded = actionCreators.submitItem.bind(null, item);
 		AppDispatcher.dispatchAsync(ItemAPI.submitItem(item), {
 			request : constants.SUBMIT_ITEM,
 			success : constants.SUBMIT_ITEM_SUCCESS,
 			error   : constants.SUBMIT_ITEM_ERROR
-		}, item);
+		}, item, submitItemBinded);
 	},
 	setItem (item) {
 		AppDispatcher.dispatch({
@@ -46,11 +47,12 @@ export default {
 		});
 	},
 	deleteItem (id) {
+		let deleteItemBinded = actionCreators.deleteItem.bind(null, id);
 		AppDispatcher.dispatchAsync(ItemAPI.deleteItem(id), {
 			request : constants.DELETE_ITEM,
 			success : constants.DELETE_ITEM_SUCCESS,
 			error   : constants.DELETE_ITEM_ERROR
-		}, {id});
+		}, {id}, deleteItemBinded);
 	},
 	displayItem (id) {
 		AppDispatcher.dispatch({
@@ -59,3 +61,5 @@ export default {
 		});
 	}
 };
+
+export default actionCreators;

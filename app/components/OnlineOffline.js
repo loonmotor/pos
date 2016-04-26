@@ -3,6 +3,7 @@ import OnlineOfflineActionCreators from '../actions/OnlineOfflineActionCreators'
 import classNames from 'classnames';
 import {Container} from 'flux/utils';
 import OnlineOfflineStore from '../stores/OnlineOfflineStore';
+import ActionCreatorsStore from '../stores/ActionCreatorsStore';
 
 class OnlineOffline extends Component {
 	componentDidMount () {
@@ -14,7 +15,9 @@ class OnlineOffline extends Component {
 		eventSource.addEventListener('heartbeat', (event) => {
 			OnlineOfflineActionCreators.online();
 			clearTimeout(timeoutId);
-			timeoutId = setTimeout(isOffline, 2000);
+			timeoutId = setTimeout(isOffline, 7000);
+			ActionCreatorsStore.getState().forEach((actionCreator) => actionCreator());
+			OnlineOfflineActionCreators.resetActionCreators();
 		});
 	}
 	render () {
@@ -31,10 +34,11 @@ class OnlineOffline extends Component {
 	}
 }
 
-OnlineOffline.getStores = () => [OnlineOfflineStore];
+OnlineOffline.getStores = () => [OnlineOfflineStore, ActionCreatorsStore];
 
 OnlineOffline.calculateState = prevState => ({
-	online : OnlineOfflineStore.getState()
+	online : OnlineOfflineStore.getState(),
+	actionCreators : ActionCreatorsStore.getState()
 });
 
 export default Container.create(OnlineOffline);

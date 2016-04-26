@@ -2,6 +2,7 @@ import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import constants from '../constants';
 import update from 'react-addons-update';
+import ItemStore from './ItemStore';
 
 class ItemsStore extends ReduceStore {
 	getInitialState () {
@@ -22,6 +23,9 @@ class ItemsStore extends ReduceStore {
 		return this._state.items[this.getItemIndex(id)];
 	}
 	reduce (state, action) {
+		this.getDispatcher().waitFor([
+			ItemStore.getDispatchToken()
+		]);
 		switch (action.type) {
 			case constants.FETCH_ITEMS_SUCCESS :
 				return update(this.getState(), {
@@ -33,7 +37,7 @@ class ItemsStore extends ReduceStore {
 							$set : action.payload.response.count
 						},
 						pageNum : {
-							$set : Math.cel(action.payload.response.count / this.getState().meta.limit)
+							$set : Math.ceil(action.payload.response.count / this.getState().meta.limit)
 						}
 					}
 				});
@@ -73,13 +77,14 @@ class ItemsStore extends ReduceStore {
 					}
 				});
 			case constants.DELETE_ITEM :
-				console.log(action.payload.id);
-				console.log(this.getItemIndex(action.payload.id));
-				return update(this.getState(), {
-					items : {
-						$splice : [[this.getItemIndex(action.payload.id), 1]]
-					}
-				});
+				const index = this.getItemIndex(action.payload.id);
+				if (index > -1) {
+					return update(this.getState(), {
+						items : {
+							$splice : [[index, 1]]
+						}
+					});
+				}
 			default :
 				return state;
 		}

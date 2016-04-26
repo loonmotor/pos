@@ -18,7 +18,7 @@ class App extends Component {
 									<span className="uk-badge uk-badge-success uk-text-large">POS</span>
 								</Link>
 								</div>
-								{/*<OnlineOffline />*/}
+								<OnlineOffline />
 							</div>
 							<div className="uk-width-2-3">
 								<NavMenu />

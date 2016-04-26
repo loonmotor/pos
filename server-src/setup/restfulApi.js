@@ -4,7 +4,6 @@ import async from 'async';
 
 restfulApi.use('Item', 'GET', (resourceName, req, res, done) => {
 	const {id} = req.params;
-	console.log(id);
 	db.Item.findOne({ id }, (err, doc) => {
 		if (err) {
 			return done(err);
@@ -14,6 +13,8 @@ restfulApi.use('Item', 'GET', (resourceName, req, res, done) => {
 				msg : 'Item not found'
 			});
 		}
+		console.log('holar');
+		console.log(doc);
 		res.json(doc);
 		done();
 	});

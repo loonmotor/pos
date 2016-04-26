@@ -22,7 +22,6 @@ let getPropsFromRoute = ({routes}, componentProps) => {
 
 let renderRoute = (req, res, routeObj) => {
 	let routeProps = getPropsFromRoute(routeObj, ['requestInitialData', 'noScriptPost']);
-	console.log(req.method);
 	if (routeProps.noScriptPost && req.method === 'POST') {
 		routeProps.noScriptPost(req.body).then(
 			data => {
@@ -44,8 +43,10 @@ let renderRoute = (req, res, routeObj) => {
 		return;
 	}
 	if (routeProps.requestInitialData) {
+		console.log('a');
 		routeProps.requestInitialData({ server: { originalUrl : req.originalUrl.split('/') }}).then(
 			data => {
+				console.log('b');
 				let handleCreateElement = (Component, props) => (
 					<Component initialData={data} {...props} />
 				);
@@ -55,6 +56,8 @@ let renderRoute = (req, res, routeObj) => {
 				});
 			}, 
 			error => {
+				console.log('y');
+				console.log(renderToString(<RouterContext {...routeObj} />));
 				res.render('index', {
 					reactInitialData : null,
 					content : renderToString(<RouterContext {...routeObj} />)

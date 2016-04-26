@@ -6,6 +6,7 @@ import ItemsStore from '../stores/ItemsStore';
 import fetch from 'isomorphic-fetch';
 import ReactPaginate from 'react-paginate';
 import {Link} from 'react-router';
+import classNames from 'classnames';
 
 class Items extends Component {
 	constructor () {
@@ -35,9 +36,20 @@ class Items extends Component {
 		ItemsActionCreators.setPaginationOffset(0);
 	}
 	render () {
+		const
+			msgClass = classNames({
+				'uk-hidden' : !this.props.initialData.msg,
+				'uk-alert' : true,
+				'noscript-show' : true
+			})
+			, paginationClass = classNames({
+				'uk-grid' : true,
+				'noscript-hide' : true
+			});
 		const {items, meta:{offset, limit, pageNum}} = this.state.data;
 		return (
 			<div>
+				<div className={msgClass}>{this.props.initialData.msg}</div>
 				<div className="uk-grid">
 					<div className="uk-width-medium-4-5 uk-width-large-4-5 uk-container-center uk-margin-top">
 						<h3>Manage Items</h3>
@@ -62,8 +74,10 @@ class Items extends Component {
 										<td>{item.price}</td>
 										<td>
 											<div className="uk-button-group">
-												<Link to={`/item/${item.id}`} className="uk-button uk-button-mini"><i className="uk-icon-edit"></i> Edit</Link>
-												<a href="#" className="uk-button uk-button-mini" onClick={this.handleItemDelete.bind(this, item.id)}><i className="uk-icon-remove"></i> Delete</a>
+												<Link to={`item/${item.id}`} className="uk-button uk-button-mini"><i className="uk-icon-edit"></i> Edit</Link>
+												<form method="POST">
+													<button type="submit" name="id" value={item.id} className="uk-button uk-button-mini" onClick={this.handleItemDelete.bind(this, item.id)}><i className="uk-icon-remove"></i> Delete</button>
+												</form>
 											</div>
 										</td>
 									</tr>
@@ -72,7 +86,7 @@ class Items extends Component {
 						</table>
 					</div>
 				</div>
-				<div className="uk-grid">
+				<div className={paginationClass}>
 					<div className="uk-width-medium-4-5 uk-width-large-4-5 uk-container-center uk-margin-large-bottom">
 						<ReactPaginate previousLabel={"Previous"}
 									   nextLabel={"Next"}
@@ -89,14 +103,28 @@ class Items extends Component {
 }
 
 Items.requestInitialData = ({server, client}) => {
+		console.log('c');
 	if (server) {
+		console.log('d');
 		return fetch(`http://localhost:3000/data/items`).then(response => response.json());
 	}
 	if (client) {
 		const {offset, limit} = client;
 		return fetch(`http://localhost:3000/data/items/${offset}/${limit}`).then(response => response.json());
 	}
+	console.log('e');
 };
+
+Items.noScriptPost = body => {
+	return fetch(`http://localhost:3000/noscript/data/items`, {
+		method : 'POST',
+		headers : {
+			'Content-Type' : 'application/json'
+		},
+		body : JSON.stringify(body)
+	}).then(response => response.json());
+};
+
 Items.getStores = () => [ItemsStore];
 Items.calculateState = prevState => ({
 	data : ItemsStore.getState()

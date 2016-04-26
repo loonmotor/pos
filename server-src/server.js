@@ -8,6 +8,7 @@ import itemRoute from './routes/item';
 import itemsRoute from './routes/items';
 import heartBeatRoute from './routes/heartBeat';
 import noScriptItemRoute from './routes/noScriptItemRoute';
+import noScriptItemsRoute from './routes/noScriptItemsRoute';
 import './setup/restfulApi';
 import './setup/noScriptRestfulApi';
 import SSE from 'sse';
@@ -28,6 +29,7 @@ app.use('/data', itemRoute);
 app.use('/data', itemsRoute);
 app.use('/heart-beat', heartBeatRoute);
 app.use('/noscript/data', noScriptItemRoute);
+app.use('/noscript/data', noScriptItemsRoute);
 
 app.use(express.static(path.join(__dirname, '../public'), {
 	maxAge : 0

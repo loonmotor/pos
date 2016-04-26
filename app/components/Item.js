@@ -11,6 +11,7 @@ import {checkStatus} from '../utils';
 class Item extends Component {
 	constructor () {
 		super(...arguments);
+		ItemActionCreators.resetItem();
 		if (this.props.initialData) {
 			ItemActionCreators.editMode();
 			ItemActionCreators.setItem(this.props.initialData);
@@ -22,19 +23,7 @@ class Item extends Component {
 				ItemActionCreators.displayItem(this.props.params.id);
 				ItemActionCreators.editMode();
 			}, 0);
-			// Item.requestInitialData({client:{id:this.props.params.id}}).then(
-			// 	data => {
-			// 		ItemActionCreators.setItem(data);
-			// 		ItemActionCreators.editMode();
-			// 	},
-			// 	error => {
-			// 		ItemActionCreators.setItemError(error);
-			// 	}
-			// );
 		}
-	}
-	componentWillUnmount () {
-		ItemActionCreators.resetItem();
 	}
 	handleItemSubmit (item, event) {
 		event.preventDefault();
@@ -119,6 +108,7 @@ Item.requestInitialData = ({server, client}) => {
 			return fetch(`http://localhost:3000/data/item/${id}`)
 					.then(checkStatus);
 		}
+		console.log('x');
 		return Promise.reject('Create Item');
 	}
 	if (client) {
@@ -128,7 +118,7 @@ Item.requestInitialData = ({server, client}) => {
 	}
 };
 
-Item.noScriptPost = (body) => {
+Item.noScriptPost = body => {
 	return fetch(`http://localhost:3000/noscript/data/item`, {
 		method : 'POST',
 		headers : {

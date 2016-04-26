@@ -1,9 +1,9 @@
 import restfulApi from '../modules/restfulApi';
 import db from './mongojs';
+import async from 'async';
 
 restfulApi.use('NoScript.Item', 'POST', (resourceName, req, res, done) => {
 	let {id, name, price, paymentTypes = ''} = req.body;
-	console.log(paymentTypes);
 	paymentTypes = {
 		upfront : paymentTypes.indexOf('upfront') > -1,
 		downpayment : paymentTypes.indexOf('downpayment') > -1,
@@ -25,8 +25,6 @@ restfulApi.use('NoScript.Item', 'POST', (resourceName, req, res, done) => {
 		paymentTypes
 	};
 
-	console.log(Object.assign({}, doc, {error}, {msg:'There are errors'}));
-
 	if (Object.keys(error.required).some(key => error.required[key])) {
 		return done(Object.assign({}, doc, {error}, {dirty:true}, {msg:'There are errors'}));
 	}
@@ -35,7 +33,6 @@ restfulApi.use('NoScript.Item', 'POST', (resourceName, req, res, done) => {
 
 restfulApi.use('NoScript.Item', 'POST', (resourceName, req, res, done) => {
 	let {id, name, price, paymentTypes} = req.body;
-	console.log(paymentTypes);
 
 	paymentTypes = {
 		upfront : paymentTypes.indexOf('upfront') > -1,
@@ -64,8 +61,48 @@ restfulApi.use('NoScript.Item', 'POST', (resourceName, req, res, done) => {
 				msg : updatedExisting ? 'Item not edited' : 'Item not created'
 			});
 		}
+
 		res.json(Object.assign({}, doc, {msg:updatedExisting ? 'Item edited successfully' : 'Item created successfully'}));
 		return done();
 	});
 
+});
+
+restfulApi.use('NoScript.Items', 'POST', (resourceName, req, res, done) => {
+	const {id} = req.body;
+
+	async.series([
+		ok => {
+			db.Item.findAndModify({
+				query : {id},
+				remove : true
+			}, (err, doc) => {
+				if (err) {
+					return ok(err);
+				}
+				ok();
+			});
+		},
+		ok => {
+			db.Item
+				.find({})
+				.sort({$natural:-1}, (err, docs) => {
+					if (err) {
+						return ok(err);
+					}
+					ok(null, docs);
+				});
+		}
+	], (err, [,items]) => {
+		if (err) {
+			return done(err);
+		}
+		res.json({
+			msg : 'Item deleted successfully',
+			items
+		});
+		done();
+	});
+
+	
 });

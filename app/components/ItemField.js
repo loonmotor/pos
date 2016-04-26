@@ -11,7 +11,7 @@ class ItemField extends Component {
 			<div className="uk-form-row">
 				<label className="uk-form-label" htmlFor={name}>{name}</label>
 				<div className="uk-form-controls">
-					<input type={type} id={name} className={className} value={value} onChange={this.handleFieldChange.bind(this, name.toLowerCase())} autoFocus={autoFocus} />
+					<input type={type} name={name.toLowerCase()} id={name.toLowerCase()} className={className} value={value} onChange={this.handleFieldChange.bind(this, name.toLowerCase())} autoFocus={autoFocus} />
 					<section className={isDirtyClass}>
 						<div className={requiredClass}>This field is required</div>
 					</section>

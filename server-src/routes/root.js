@@ -21,7 +21,28 @@ let getPropsFromRoute = ({routes}, componentProps) => {
 };
 
 let renderRoute = (req, res, routeObj) => {
-	let routeProps = getPropsFromRoute(routeObj, ['requestInitialData']);
+	let routeProps = getPropsFromRoute(routeObj, ['requestInitialData', 'noScriptPost']);
+	console.log(req.method);
+	if (routeProps.noScriptPost && req.method === 'POST') {
+		routeProps.noScriptPost(req.body).then(
+			data => {
+				let handleCreateElement = (Component, props) => (
+					<Component initialData={data} {...props} />
+				);
+				res.render('index', {
+					reactInitialData : JSON.stringify(data),
+					content : renderToString(<RouterContext createElement={handleCreateElement} {...routeObj} />)
+				});
+			},
+			error => {
+				res.render('index', {
+					reactInitialData : null,
+					content : renderToString(<RouterContext {...routeObj} />)
+				});
+			}
+		);
+		return;
+	}
 	if (routeProps.requestInitialData) {
 		routeProps.requestInitialData({ server: { originalUrl : req.originalUrl.split('/') }}).then(
 			data => {
@@ -34,7 +55,6 @@ let renderRoute = (req, res, routeObj) => {
 				});
 			}, 
 			error => {
-				console.log('render lar');
 				res.render('index', {
 					reactInitialData : null,
 					content : renderToString(<RouterContext {...routeObj} />)
@@ -49,7 +69,7 @@ let renderRoute = (req, res, routeObj) => {
 	}
 };
 
-router.get('/', (req, res) => {
+router.all('/', (req, res) => {
 	match({ routes, location : req.originalUrl }, (error, redirectLocation, routeObj) => {
 		if (error) {
 			res.status(500).send(error.message);

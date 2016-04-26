@@ -15,6 +15,16 @@
 		<div><%- content %></div>
 	</div>
 
+	<style>
+		.noscript-show { display : none; }
+	</style>
+	<noscript>
+		<style>
+			.noscript-hide { display : none; }
+			.noscript-show { display : inherit; }
+		</style>
+	</noscript>
+
 	<script type="application/json" id="react-initial-data">
 		<%- reactInitialData %>
 	</script>

@@ -68,6 +68,7 @@ class ItemStore extends ReduceStore {
 					}
 				});
 			case constants.SET_ITEM :
+				console.log(action.item);
 				return Object.assign({}, this.getState(), action.item);
 			case constants.RESET_ITEM :
 				return this.getInitialState();

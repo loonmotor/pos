@@ -7,7 +7,9 @@ import rootRoute from './routes/root';
 import itemRoute from './routes/item';
 import itemsRoute from './routes/items';
 import heartBeatRoute from './routes/heartBeat';
+import noScriptItemRoute from './routes/noScriptItemRoute';
 import './setup/restfulApi';
+import './setup/noScriptRestfulApi';
 import SSE from 'sse';
 
 const
@@ -25,6 +27,7 @@ app.use(bodyParser.json({ limit : '1mb' }));
 app.use('/data', itemRoute);
 app.use('/data', itemsRoute);
 app.use('/heart-beat', heartBeatRoute);
+app.use('/noscript/data', noScriptItemRoute);
 
 app.use(express.static(path.join(__dirname, '../public'), {
 	maxAge : 0

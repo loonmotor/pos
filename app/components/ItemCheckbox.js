@@ -10,7 +10,7 @@ class ItemCheckbox extends Component {
 		return (
 			<div className="uk-form-row">
 				<label>
-					<input type="checkbox" checked={checked} onChange={this.handlePaymentTypeToggle.bind(this, value)} />
+					<input type="checkbox" name="paymentTypes" value={value} checked={checked} onChange={this.handlePaymentTypeToggle.bind(this, value)} />
 					{name}
 				</label>
 			</div>

@@ -18,9 +18,10 @@ class Transaction extends Component {
 		}
 	}
 	componentDidMount () {
-		if (!this.props.initialData && this.props.params.itemId) {
+		const {query} = this.props.location;
+		if (!this.props.initialData && query.itemId) {
 			setTimeout(() => {
-				TransactionActionCreators.displayItem(this.props.params.itemId);
+				TransactionActionCreators.displayItem(query.itemId);
 				TransactionActionCreators.editMode();
 			}, 0);
 		}
@@ -114,9 +115,6 @@ class Transaction extends Component {
 							<div className="uk-form-row">
 								<label className="uk-form-label" htmlFor="payment-type">Payment Types</label>
 								<div className="uk-form-controls">
-									{/*<ItemCheckbox name="Upfront Full" value='upfront' disabled={true} checked={transaction.item.paymentTypes.upfront}  />
-									<ItemCheckbox name="Down Payment" value='downpayment' disabled={true} checked={transaction.item.paymentTypes.downpayment}  />
-									<ItemCheckbox name="Multiple Payments" value='multiplepayments' disabled={true} checked={transaction.item.paymentTypes.multiplepayments}  />*/}
 									{Object.keys(transaction.item.paymentTypes).map(paymentType => {
 										if (transaction.item.paymentTypes[paymentType]) {
 											return (
@@ -157,7 +155,7 @@ class Transaction extends Component {
 
 Transaction.requestInitialData = ({server, client}) => {
 	if (server) {
-		const [,,itemId] = server.originalUrl;
+		const {itemId} = server.query;
 		if (itemId) {
 			return fetch(`http://localhost:3000/data/item/${itemId}`)
 					.then(checkStatus);

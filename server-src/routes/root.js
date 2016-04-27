@@ -44,7 +44,7 @@ let renderRoute = (req, res, routeObj) => {
 	}
 	if (routeProps.requestInitialData) {
 		console.log('a');
-		routeProps.requestInitialData({ server: { originalUrl : req.originalUrl.split('/') }}).then(
+		routeProps.requestInitialData({ server: { originalUrl : req.originalUrl.split('/'), query : req.query }}).then(
 			data => {
 				console.log('b');
 				let handleCreateElement = (Component, props) => (

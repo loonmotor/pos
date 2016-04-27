@@ -78,7 +78,7 @@ class Items extends Component {
 												<form method="POST">
 													<button type="submit" name="id" value={item.id} className="uk-button uk-button-mini" onClick={this.handleItemDelete.bind(this, item.id)}><i className="uk-icon-remove"></i> Delete</button>
 												</form>
-												<Link to={`transaction/${item.id}`} className="uk-button uk-button-mini"><i className="uk-icon-credit-card"></i> Create Transaction</Link>
+												<Link to={`transaction/?itemId=${item.id}`} className="uk-button uk-button-mini"><i className="uk-icon-credit-card"></i> Create Transaction</Link>
 											</div>
 										</td>
 									</tr>

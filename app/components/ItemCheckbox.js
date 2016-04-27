@@ -6,11 +6,11 @@ class ItemCheckbox extends Component {
 		ItemActionCreators.togglePaymentType(paymentType);
 	}
 	render () {
-		const {name, value, checked} = this.props;
+		const {name, value, checked, disabled} = this.props;
 		return (
 			<div className="uk-form-row">
 				<label>
-					<input type="checkbox" name="paymentTypes" value={value} checked={checked} onChange={this.handlePaymentTypeToggle.bind(this, value)} />
+					<input type="checkbox" name="paymentTypes" value={value} disabled={disabled} checked={checked} onChange={this.handlePaymentTypeToggle.bind(this, value)} />
 					{name}
 				</label>
 			</div>

@@ -11,7 +11,6 @@ class NavMenu extends Component {
 						<div className="uk-dropdown uk-dropdown-small">
 							<ul className="uk-nav uk-nav-dropdown">
 								<li><Link to="/item"><i className="uk-icon-plus-square"></i>&nbsp;&nbsp; Item</Link> </li>
-								<li><Link to="/transaction"><i className="uk-icon-credit-card"></i>&nbsp; Transaction</Link></li>
 							</ul>
 						</div>
 					</li>
@@ -27,7 +26,6 @@ class NavMenu extends Component {
 				</ul>
 				<ul className="uk-subnav uk-subnav-line uk-float-right noscript-show">
 	                <li class="uk-active"><Link to="/item">Create Item</Link></li>
-	                <li><Link to="/transaction">Create Transaction</Link></li>
 	                <li><Link to="/items">Manage Items</Link></li>
 	                <li><Link to="/transactions">Manage Transactions</Link></li>
 	            </ul>

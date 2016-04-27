@@ -72,12 +72,13 @@ class Items extends Component {
 										<td>{index + 1 + offset * limit}</td>
 										<td>{item.name}</td>
 										<td>{item.price}</td>
-										<td>
+										<td className="uk-text-center">
 											<div className="uk-button-group">
 												<Link to={`item/${item.id}`} className="uk-button uk-button-mini"><i className="uk-icon-edit"></i> Edit</Link>
 												<form method="POST">
 													<button type="submit" name="id" value={item.id} className="uk-button uk-button-mini" onClick={this.handleItemDelete.bind(this, item.id)}><i className="uk-icon-remove"></i> Delete</button>
 												</form>
+												<Link to={`transaction/${item.id}`} className="uk-button uk-button-mini"><i className="uk-icon-credit-card"></i> Create Transaction</Link>
 											</div>
 										</td>
 									</tr>

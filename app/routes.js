@@ -14,9 +14,8 @@ export default (
 		<Route path="item" component={Item} name="Create Item" />
 		<Route path="item/:id" component={Item} name="Edit Item" />
 		<Route path="items" component={Items} name="Manage Items" />
-		<Route path="transaction" component={Transaction} name="Create Transaction">
-			<Route path=":id" component={Transaction} name="Edit Transaction" />
-		</Route>
+		<Route path="transaction/:itemId" component={Transaction} name="Create Transaction" />
+		<Route path="transaction/:itemId/:id" component={Transaction} name="Edit Transaction" />
 		<Route path="transactions" component={Transactions} name="Manage Transactions" />
 		<Route path="*" component={NotFound} name="Not Found" />
 	</Route>

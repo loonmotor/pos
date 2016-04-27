@@ -8,13 +8,13 @@ class NotificationStore extends ReduceStore {
 		return {};
 	}
 	reduce (state, action) {
-		if (action.type.indexOf('SUCCESS') > -1 && action.payload.response.msg) {
+		if (action.type && action.type.indexOf('SUCCESS') > -1 && action.payload.response.msg) {
 			return {
 				type : 'success',
 				msg  : action.payload.response.msg
 			};
 		}
-		if (action.type.indexOf('ERROR') > -1 && action.payload.error.response.msg) {
+		if (action.type && action.type.indexOf('ERROR') > -1 && action.payload.error.response.msg) {
 			return {
 				type : 'danger',
 				msg  : action.payload.error.response.msg

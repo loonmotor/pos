@@ -29,7 +29,7 @@ restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
 		errors.paymentTypes = 'Payment types is required';
 	}
 	if (paymentTypes) {
-		if (!upfront && !downpayment && !!multiplepayments) { errors.paymentTypes = 'At least a payment type is required'; }
+		if (!upfront && !downpayment && !multiplepayments) { errors.paymentTypes = 'At least a payment type is required'; }
 	}
 	if (Object.keys(errors).length > 0) {
 		return done({

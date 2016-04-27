@@ -18,7 +18,7 @@ class Item extends Component {
 		}
 	}
 	componentDidMount () {
-		if (this.props.params.id) {
+		if (!this.props.initialData && this.props.params.id) {
 			setTimeout(() => {
 				ItemActionCreators.displayItem(this.props.params.id);
 				ItemActionCreators.editMode();
@@ -29,15 +29,18 @@ class Item extends Component {
 		event.preventDefault();
 		ItemActionCreators.submitItem(item);
 	}
+	handleFieldChange (field, value) {
+		ItemActionCreators.editItemField(field, value);
+	}
 	render () {
 		const
 			nameClass = classNames({
 				'uk-width-1-1' : true,
-				'uk-form-danger' : false
+				'uk-form-danger' : this.state.item.dirty && this.state.item.error.required.name
 			})
 			, priceClass = classNames({
 				'uk-width-1-1' : true,
-				'uk-form-danger' : false
+				'uk-form-danger' : this.state.item.dirty && this.state.item.error.required.price
 			})
 			, isDirtyClass = classNames({
 				'uk-hidden' : !this.state.item.dirty
@@ -71,14 +74,14 @@ class Item extends Component {
 						
 							<input name="id" type="hidden" value={this.state.item.id} />
 
-							<ItemField name="Name" type="text" value={this.state.item.name} autoFocus={true} className={nameClass} isDirtyClass={isDirtyClass} requiredClass={nameRequiredClass} />
+							<ItemField name="Name" type="text" value={this.state.item.name} handleFieldChange={this.handleFieldChange.bind(this)} autoFocus={true} className={nameClass} isDirtyClass={isDirtyClass} requiredClass={nameRequiredClass} />
 					
-							<ItemField name="Price" type="number" value={this.state.item.price} autoFocus={false} className={priceClass} isDirtyClass={isDirtyClass} requiredClass={priceRequiredClass} />
+							<ItemField name="Price" type="number" value={this.state.item.price} handleFieldChange={this.handleFieldChange.bind(this)} autoFocus={false} className={priceClass} isDirtyClass={isDirtyClass} requiredClass={priceRequiredClass} />
 
 							<div className="uk-form-row">
 								<label className="uk-form-label" htmlFor="payment-type">Payment Types</label>
 								<div className="uk-form-controls">
-									<ItemCheckbox name="Upfront Full" value='upfront' checked={this.state.item.paymentTypes.upfront}  />
+									<ItemCheckbox name="Upfront Full" value='upfront' checked={this.state.item.paymentTypes.upfront} readOnly />
 									<ItemCheckbox name="Down Payment" value='downpayment' checked={this.state.item.paymentTypes.downpayment}  />
 									<ItemCheckbox name="Multiple Payments" value='multiplepayments' checked={this.state.item.paymentTypes.multiplepayments}  />
 									<section className={isDirtyClass}>
@@ -108,7 +111,6 @@ Item.requestInitialData = ({server, client}) => {
 			return fetch(`http://localhost:3000/data/item/${id}`)
 					.then(checkStatus);
 		}
-		console.log('x');
 		return Promise.reject('Create Item');
 	}
 	if (client) {

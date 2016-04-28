@@ -23,6 +23,11 @@ const actionCreators = {
 			type : constants.TRANSACTION_EDIT_MODE
 		});
 	},
+	itemEditMode () {
+		AppDispatcher.dispatch({
+			type : constants.TRANSACTION_ITEM_EDIT_MODE
+		});
+	},
 	displayTransactionItem (itemId) {
 		AppDispatcher.dispatch({
 			type : constants.TRANSACTION_DISPLAY_ITEM,
@@ -45,6 +50,12 @@ const actionCreators = {
 			type : constants.TRANSACTION_SET_ITEM,
 			item
 		});
+	},
+	setTransaction (transaction) {
+		AppDispatcher.dispatch({
+			type : constants.SET_TRANSACTION,
+			transaction
+		})
 	},
 	editQuantityField (value) {
 		AppDispatcher.dispatch({

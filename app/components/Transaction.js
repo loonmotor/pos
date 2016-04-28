@@ -11,10 +11,25 @@ import {checkStatus} from '../utils';
 class Transaction extends Component {
 	constructor () {
 		super(...arguments);
+		const {query} = this.props.location;
 		TransactionActionCreators.resetTransaction();
-		if (this.props.initialData) {
+		if (this.props.initialData && query.itemId) {
+			console.log('a');
 			TransactionActionCreators.setTransactionItem(this.props.initialData);
+			TransactionActionCreators.itemEditMode();
+		}
+		if (this.props.initialData && this.props.params.id) {
+			console.log('bb');
+			console.log(this.props.initialData);
+			TransactionActionCreators.setTransaction(this.props.initialData);
 			TransactionActionCreators.editMode();
+		}
+		if (!this.props.initialData && this.props.params.id) {
+			console.log('c');
+			setTimeout(() => {
+				TransactionActionCreators.displayTransaction(this.props.params.id);
+				TransactionActionCreators.editMode();
+			}, 0);
 		}
 	}
 	componentDidMount () {
@@ -22,7 +37,7 @@ class Transaction extends Component {
 		if (!this.props.initialData && query.itemId) {
 			setTimeout(() => {
 				TransactionActionCreators.displayTransactionItem(query.itemId);
-				TransactionActionCreators.editMode();
+				TransactionActionCreators.itemEditMode();
 			}, 0);
 		}
 		if (!this.props.initialData && this.props.params.id) {

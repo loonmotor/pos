@@ -43,10 +43,9 @@ let renderRoute = (req, res, routeObj) => {
 		return;
 	}
 	if (routeProps.requestInitialData) {
-		console.log('a');
 		routeProps.requestInitialData({ server: { originalUrl : req.originalUrl.split('/'), query : req.query }}).then(
 			data => {
-				console.log('b');
+				console.log(data);
 				let handleCreateElement = (Component, props) => (
 					<Component initialData={data} {...props} />
 				);
@@ -56,7 +55,6 @@ let renderRoute = (req, res, routeObj) => {
 				});
 			}, 
 			error => {
-				console.log('y');
 				console.log(renderToString(<RouterContext {...routeObj} />));
 				res.render('index', {
 					reactInitialData : null,

@@ -5,6 +5,7 @@ import update from 'react-addons-update';
 import shortid from 'shortid';
 import ItemsStore from './ItemsStore';
 import TransactionsStore from './TransactionsStore';
+import TransactionActionCreators from '../actions/TransactionActionCreators';
 
 const defaultPayment = () => ({
 	id : shortid.generate(),
@@ -114,6 +115,19 @@ class TransactionStore extends ReduceStore {
 						$set : true
 					}
 				});
+			case constants.TRANSACTION_ITEM_EDIT_MODE :
+				return update(this.getState(), {
+					error : {
+						required : {
+							quantity : {
+								$set : false
+							}
+						}
+					},
+					editMode : {
+						$set : true
+					}
+				});
 			case constants.TRANSACTION_DISPLAY_ITEM :
 				return Object.assign({}, this.getState(), {item:ItemsStore.getItem(action.itemId)});
 			case constants.DISPLAY_TRANSACTION :
@@ -127,6 +141,9 @@ class TransactionStore extends ReduceStore {
 					}
 				});
 			case constants.TRANSACTION_EDIT_QUANTITY :
+				setTimeout(() => {
+					TransactionActionCreators.editPaymentType(this.getState().paymentType);
+				}, 0);
 				return update(this.getState(), {
 					quantity : {
 						$set : Number(action.value) > 0 ? action.value : 1
@@ -306,6 +323,8 @@ class TransactionStore extends ReduceStore {
 					});
 				}
 				return nextState;
+			case constants.SET_TRANSACTION :
+				return Object.assign({}, this.getState(), action.transaction);
 		}
 		return state;
 	}

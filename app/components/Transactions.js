@@ -81,7 +81,7 @@ class Transactions extends Component {
 										<td>{transaction.item.price * transaction.quantity}</td>
 										<td>{transaction.paymentType}</td>
 										<td>{transaction.payments.reduce((acc, payment) => acc + payment.amount, 0)}</td>
-										<td>{transaction.payments.reduce((acc, payment) => acc + payment.amount, 0) >= transaction.item.price * transaction.quantity ? 'Paid' : 'Outstanding'}</td>
+										<td>{transaction.payments.reduce((acc, payment) => acc + payment.amount, 0) >= transaction.item.price * transaction.quantity ? (<div className="uk-badge uk-badge-success">Paid</div>) : (<div className="uk-badge uk-badge-danger">Outstanding</div>)}</td>
 										<td>
 											<div className="uk-button-group">
 												<Link to={`transaction/${transaction.id}`} className="uk-button uk-button-mini"><i className="uk-icon-edit"></i> Edit</Link>

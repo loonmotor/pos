@@ -28,7 +28,7 @@ restfulApi.use('NoScript.Item', 'POST', (resourceName, req, res, done) => {
 	if (Object.keys(error.required).some(key => error.required[key])) {
 		return done(Object.assign({}, doc, {error}, {dirty:true}, {msg:'There are errors'}));
 	}
-	done();	
+	done();
 });
 
 restfulApi.use('NoScript.Item', 'POST', (resourceName, req, res, done) => {

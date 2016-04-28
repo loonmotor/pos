@@ -6,6 +6,8 @@ import path from 'path';
 import rootRoute from './routes/root';
 import itemRoute from './routes/item';
 import itemsRoute from './routes/items';
+import transactionRoute from './routes/transaction';
+import transactionsRoute from './routes/transactions';
 import heartBeatRoute from './routes/heartBeat';
 import noScriptItemRoute from './routes/noScriptItemRoute';
 import noScriptItemsRoute from './routes/noScriptItemsRoute';
@@ -27,6 +29,8 @@ app.use(bodyParser.json({ limit : '1mb' }));
 
 app.use('/data', itemRoute);
 app.use('/data', itemsRoute);
+app.use('/data', transactionRoute);
+app.use('/data', transactionsRoute);
 app.use('/heart-beat', heartBeatRoute);
 app.use('/noscript/data', noScriptItemRoute);
 app.use('/noscript/data', noScriptItemsRoute);

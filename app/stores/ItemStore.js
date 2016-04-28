@@ -68,8 +68,6 @@ class ItemStore extends ReduceStore {
 					}
 				});
 			case constants.SET_ITEM :
-				console.log('here');
-				console.log(action.item);
 				return Object.assign({}, this.getState(), action.item);
 			case constants.RESET_ITEM :
 				return this.getInitialState();
@@ -90,7 +88,6 @@ class ItemStore extends ReduceStore {
 					}
 				});
 			case constants.DELETE_ITEM_ERROR :
-				console.log('delete item error');
 				return state;
 			case constants.DISPLAY_ITEM :
 				return Object.assign({}, this.getState(), ItemsStore.getItem(action.id));

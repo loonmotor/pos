@@ -13,7 +13,7 @@ class Transaction extends Component {
 		super(...arguments);
 		TransactionActionCreators.resetTransaction();
 		if (this.props.initialData) {
-			TransactionActionCreators.setItem(this.props.initialData);
+			TransactionActionCreators.setTransactionItem(this.props.initialData);
 			TransactionActionCreators.editMode();
 		}
 	}
@@ -21,7 +21,13 @@ class Transaction extends Component {
 		const {query} = this.props.location;
 		if (!this.props.initialData && query.itemId) {
 			setTimeout(() => {
-				TransactionActionCreators.displayItem(query.itemId);
+				TransactionActionCreators.displayTransactionItem(query.itemId);
+				TransactionActionCreators.editMode();
+			}, 0);
+		}
+		if (!this.props.initialData && this.props.params.id) {
+			setTimeout(() => {
+				TransactionActionCreators.displayTransaction(this.props.params.id);
 				TransactionActionCreators.editMode();
 			}, 0);
 		}
@@ -35,13 +41,15 @@ class Transaction extends Component {
 	handlePaymentTypeChange (value) {
 		TransactionActionCreators.editPaymentType(value);
 	}
+	handlePaymentChange (paymentId, field, value) {
+		TransactionActionCreators.editPayment(field, value, paymentId);
+	}
 	handleTransactionSubmit (transaction, event) {
 		event.preventDefault();
 		TransactionActionCreators.submitTransaction(transaction);
 	}
 	render () {
 		const {transaction} = this.state;
-		console.log(transaction);
 		const
 			buyerCompanyClass = classNames({
 				'uk-width-1-1' : true,
@@ -90,12 +98,21 @@ class Transaction extends Component {
 				'uk-hidden' : !transaction.error.required.paymentType,
 				'uk-text-danger' : true
 			})
+			, paymentExceedClass = classNames({
+				'uk-hidden' : !transaction.error.payment.exceed,
+				'uk-text-danger' : true
+			})
+			, paymentLessClass = classNames({
+				'uk-hidden' : !transaction.error.payment.less,
+				'uk-text-danger' : true
+			})
 			, isDirtyClass = classNames({
 				'uk-hidden' : !transaction.dirty
 			});
 		const gotError = Object.keys(transaction.error.required.buyer).some(key => transaction.error.required.buyer[key])
+						 || Object.keys(transaction.error.payment).some(key => transaction.error.payment[key])
 							|| transaction.error.required.paymentType;
-		console.log(transaction);
+		
 		return (
 			<div className="uk-grid">
 				<div className="uk-width-medium-4-5 uk-width-large-3-5 uk-container-center uk-margin-top">
@@ -119,7 +136,7 @@ class Transaction extends Component {
 										if (transaction.item.paymentTypes[paymentType]) {
 											return (
 												<label key={paymentType}>
-													<input type="radio" name="paymentType" onChange={this.handlePaymentTypeChange.bind(this, paymentType)} /> {paymentType} &nbsp;&nbsp;&nbsp;
+													<input type="radio" name="paymentType" checked={paymentType === transaction.paymentType} onChange={this.handlePaymentTypeChange.bind(this, paymentType)} /> {paymentType} &nbsp;&nbsp;&nbsp;
 												</label>
 											);
 										} else {
@@ -138,9 +155,16 @@ class Transaction extends Component {
 						<br />
 						<fieldset>
 							<legend>Payments</legend>
-
+							{transaction.payments.map((payment, index) => {
+								return <ItemField key={payment.id} name={`Payment ${index+1}`} type="number" value={payment.amount} handleFieldChange={this.handlePaymentChange.bind(this, payment.id)} className="uk-width-1-1" requiredClass="uk-hidden" />
+							})}
+							<section className={isDirtyClass}>
+								<div className={paymentLessClass}>Payment is less than total</div>
+								<div className={paymentExceedClass}>Payment is more than total</div>
+							</section>
 						</fieldset>
 
+						<br />
 
 						<div className="uk-form-row">
 							<button type="submit" className="uk-button noscript-hide" disabled={gotError && transaction.dirty}>Save</button>
@@ -158,6 +182,11 @@ Transaction.requestInitialData = ({server, client}) => {
 		const {itemId} = server.query;
 		if (itemId) {
 			return fetch(`http://localhost:3000/data/item/${itemId}`)
+					.then(checkStatus);
+		}
+		const [,,id] = server.originalUrl;
+		if (id) {
+			return fetch(`http://localhost:3000/data/transaction/${id}`)
 					.then(checkStatus);
 		}
 	}

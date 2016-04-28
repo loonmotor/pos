@@ -13,8 +13,6 @@ restfulApi.use('Item', 'GET', (resourceName, req, res, done) => {
 				msg : 'Item not found'
 			});
 		}
-		console.log('holar');
-		console.log(doc);
 		res.json(doc);
 		done();
 	});
@@ -66,7 +64,7 @@ restfulApi.use('Item', 'POST', (resourceName, req, res, done) => {
 		}
 		res.json({
 			msg : updatedExisting ? 'Item edited successfully' : 'Item created successfully',
-			doc : doc
+			doc
 		});
 		return done();
 	});
@@ -95,7 +93,7 @@ restfulApi.use('Item', 'DELETE', (resourceName, req, res, done) => {
 restfulApi.use('Items', 'GET', (resourceName, req, res, done) => {
 	const {offset = 0, limit = 0} = req.params;
 	async.parallel({
-		count : (ok) => {
+		count : ok => {
 			db.Item.count({}, (err, count) => {
 				if (err) {
 					return ok(err);
@@ -103,7 +101,7 @@ restfulApi.use('Items', 'GET', (resourceName, req, res, done) => {
 				return ok(null, count);
 			});
 		},
-		items : (ok) => {
+		items : ok => {
 			db.Item
 				.find({})
 				.skip(Number(offset) * Number(limit))
@@ -120,6 +118,133 @@ restfulApi.use('Items', 'GET', (resourceName, req, res, done) => {
 			return done(err);
 		}
 		res.json(results);
+		done();
+	});
+});
+
+restfulApi.use('Transaction', 'GET', (resourceName, req, res, done) => {
+	const {id} = req.params;
+	db.Transaction.findOne({ id }, (err, doc) => {
+		if (err) {
+			return done(err);
+		}
+		if (!doc) {
+			return done({
+				msg : 'Transaction not found'
+			});
+		}
+		res.json(doc);
+		done();
+	});
+});
+
+restfulApi.use('Transaction', 'POST', (resourceName, req, res, done) => {
+	const {id, modified, buyer, item, quantity, paymentType, payments} = req.body;
+	const errors = {};
+	if (!modified) { errors.modified = 'Modified timestamp is required'; }
+	if (!buyer.company) { errors.buyerCompany = 'Company name is required'; }
+	if (!buyer.name) { errors.buyerName = 'Name is required'; }
+	if (!buyer.email) { errors.buyerEmail = 'Email is required'; }
+	if (!buyer.phone) { errors.buyerPhone = 'Phone is required'; }
+	if (!item.name) { errors.itemName = 'Item id is required'; }
+	if (!item.price) { errors.itemPrice = 'Item price is required'; }
+	if (!item.paymentTypes) { errors.itemPaymentTypes = 'Item payment types is required'; }
+	if (!quantity) { errors.quantity = 'Quantity is required'; }
+	if (!paymentType) { errors.paymentType = 'Payment type is required'; }
+	if (!payments) { errors.payments = 'Payments is required'; }
+	const paymentAmount = payments.reduce((acc, payment) => acc + payment.amount, 0);
+	const itemAmount = quantity * item.price;
+	if (paymentType === 'upfront' && paymentAmount < itemAmount) { errors.upfront = "Payment is less than total"; }
+	if (paymentAmount > itemAmount) { errors.upfront = "Payment is more than total"; }
+	if (paymentType === 'downpayment' && paymentAmount < itemAmount && payments[1] && payments[1].amount !== 0) { errors.downpayment = "Payment is less than total"; }
+	if (paymentType === 'downpayment' && paymentAmount > itemAmount && payments[1] && payments[1].amount !== 0) { errors.downpayment = "Payment is more than total"; }
+	if (Object.keys(errors).length > 0) {
+		return done({
+			msg : 'There are errors',
+			error : errors
+		});
+	}
+	done();
+});
+
+restfulApi.use('Transaction', 'POST', (resourceName, req, res, done) => {
+	console.log(req.body);
+	const {id, modified, buyer, item, quantity, paymentType, payments} = req.body;
+	db.Transaction.findAndModify({
+		query : {id},
+		update : {
+			id,
+			modified,
+			buyer,
+			item,
+			quantity,
+			paymentType,
+			payments
+		},
+		upsert : true,
+		new : true
+	}, (err, doc, {updatedExisting}) => {
+		if (err) {
+			return done(err);
+		}
+		if (!doc) {
+			return done({
+				msg : updatedExisting ? 'Transaction not edited' : 'Transaction not created'
+			})
+		}
+		res.json({
+			msg : updatedExisting ? 'Transaction edited successfully' : 'Transaction created successfully',
+			doc
+		});
+		return done();
+	});
+});
+
+restfulApi.use('Transactions', 'GET', (resourceName, req, res, done) => {
+	const {offset = 0, limit = 0} = req.params;
+	async.parallel({
+		count : ok => {
+			db.Transaction.count({}, (err, count) => {
+				if (err) {
+					return ok(err);
+				}
+				return ok(null, count);
+			});
+		},
+		transactions : ok => {
+			db.Transaction
+				.find({})
+				.skip(Number(offset) * Number(limit))
+				.limit(Number(limit))
+				.sort({ $natural : -1 }, (err, docs) => {
+					if (err) {
+						return ok(err);
+					}
+					return ok(null, docs);
+				});
+		}
+	}, (err, results) => {
+		if (err) {
+			return done(err);
+		}
+		res.json(results);
+		done();
+	});
+});
+
+restfulApi.use('Transaction', 'DELETE', (resourceName, req, res, done) => {
+	const {id} = req.body;
+	db.Transaction.findAndModify({
+		query : {id},
+		remove : true
+	}, (err, doc) => {
+		if (err) {
+			return done(err);
+		}
+		res.json({
+			msg : 'Transaction deleted successfully',
+			doc
+		});
 		done();
 	});
 });

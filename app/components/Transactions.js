@@ -111,6 +111,16 @@ Transactions.requestInitialData = ({server, client}) => {
 	}
 };
 
+Transactions.noScriptPost = body => {
+	return fetch(`http://localhost:3000/noscript/data/transactions`, {
+		method : 'POST',
+		headers : {
+			'Content-Type' : 'application/json'
+		},
+		body : JSON.stringify(body)
+	}).then(response => response.json());
+};
+
 Transactions.getStores = () => [TransactionsStore];
 
 Transactions.calculateState = prevState => ({

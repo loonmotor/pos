@@ -14,7 +14,7 @@ class App extends Component {
 						<div className="uk-grid">
 							<div className="uk-width-1-3">
 								<div>
-								<Link to="/">
+								<Link to="">
 									<span className="uk-badge uk-badge-success uk-text-large">POS</span>
 								</Link>
 								</div>

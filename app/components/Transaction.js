@@ -14,18 +14,15 @@ class Transaction extends Component {
 		const {query} = this.props.location;
 		TransactionActionCreators.resetTransaction();
 		if (this.props.initialData && query.itemId) {
-			console.log('a');
 			TransactionActionCreators.setTransactionItem(this.props.initialData);
 			TransactionActionCreators.itemEditMode();
 		}
 		if (this.props.initialData && this.props.params.id) {
-			console.log('bb');
 			console.log(this.props.initialData);
 			TransactionActionCreators.setTransaction(this.props.initialData);
 			TransactionActionCreators.editMode();
 		}
 		if (!this.props.initialData && this.props.params.id) {
-			console.log('c');
 			setTimeout(() => {
 				TransactionActionCreators.displayTransaction(this.props.params.id);
 				TransactionActionCreators.editMode();
@@ -123,6 +120,11 @@ class Transaction extends Component {
 			})
 			, isDirtyClass = classNames({
 				'uk-hidden' : !transaction.dirty
+			})
+			, msgClass = classNames({
+				'uk-hidden' : !transaction.msg,
+				'uk-alert' : true,
+				'noscript-show' : true
 			});
 		const gotError = Object.keys(transaction.error.required.buyer).some(key => transaction.error.required.buyer[key])
 						 || Object.keys(transaction.error.payment).some(key => transaction.error.payment[key])
@@ -140,6 +142,9 @@ class Transaction extends Component {
 							<ItemField name="Phone" type="number" value={transaction.buyer.phone} handleFieldChange={this.handleBuyerFieldChange.bind(this)} className={buyerPhoneClass} isDirtyClass={isDirtyClass} requiredClass={buyerPhoneRequiredClass} />
 						</fieldset>
 						<br />
+						<div className={msgClass}>{transaction.msg}</div>
+						<input name="id" type="hidden" value={transaction.id} />
+						<input name="modified" type="hidden" value={transaction.modified} />
 						<fieldset>
 							<legend>Item</legend>
 							<ItemField name="Name" type="text" value={transaction.item.name} readOnly={true} className="uk-width-1-1" requiredClass="uk-hidden" />
@@ -205,6 +210,16 @@ Transaction.requestInitialData = ({server, client}) => {
 					.then(checkStatus);
 		}
 	}
+};
+
+Transaction.noScriptPost = body => {
+	return fetch(`http://localhost:3000/noscript/data/transaction`, {
+		method : 'POST',
+		headers : {
+			'Content-Type' : 'application/json'
+		},
+		body : JSON.stringify(body)
+	}).then(response => response.json());
 };
 
 Transaction.getStores = () => [TransactionStore];

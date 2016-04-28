@@ -104,16 +104,13 @@ class Items extends Component {
 }
 
 Items.requestInitialData = ({server, client}) => {
-		console.log('c');
 	if (server) {
-		console.log('d');
 		return fetch(`http://localhost:3000/data/items`).then(response => response.json());
 	}
 	if (client) {
 		const {offset, limit} = client;
 		return fetch(`http://localhost:3000/data/items/${offset}/${limit}`).then(response => response.json());
 	}
-	console.log('e');
 };
 
 Items.noScriptPost = body => {

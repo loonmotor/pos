@@ -9,8 +9,10 @@ import itemsRoute from './routes/items';
 import transactionRoute from './routes/transaction';
 import transactionsRoute from './routes/transactions';
 import heartBeatRoute from './routes/heartBeat';
-import noScriptItemRoute from './routes/noScriptItemRoute';
-import noScriptItemsRoute from './routes/noScriptItemsRoute';
+import noScriptItemRoute from './routes/noScriptItem';
+import noScriptItemsRoute from './routes/noScriptItems';
+import noScriptTransactionRoute from './routes/noScriptTransaction';
+import noScriptTransactionsRoute from './routes/noScriptTransactions';
 import './setup/restfulApi';
 import './setup/noScriptRestfulApi';
 import SSE from 'sse';
@@ -23,7 +25,7 @@ app.enable('trust proxy');
 app.engine('ejs', ejs.__express);
 app.set('view engine', 'ejs');
 
-app.use(restLogger('dev'));
+// app.use(restLogger('dev'));
 app.use(bodyParser.urlencoded({ extended : false, limit : '1mb' }));
 app.use(bodyParser.json({ limit : '1mb' }));
 
@@ -34,6 +36,8 @@ app.use('/data', transactionsRoute);
 app.use('/heart-beat', heartBeatRoute);
 app.use('/noscript/data', noScriptItemRoute);
 app.use('/noscript/data', noScriptItemsRoute);
+app.use('/noscript/data', noScriptTransactionRoute);
+app.use('/noscript/data', noScriptTransactionsRoute);
 
 app.use(express.static(path.join(__dirname, '../public'), {
 	maxAge : 0

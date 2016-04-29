@@ -145,7 +145,7 @@ restfulApi.use('NoScript.Transactions', 'POST', (resourceName, req, res, done) =
 });
 
 restfulApi.use('NoScript.Transaction', 'POST', (resourceName, req, res, done) => {
-	const {id, modified, company, name, email, phone, price, quantity, itemname, paymentTypes, paymentType} = req.body;
+	const {id, modified, company, name, email, phone, price, quantity, itemname, paymentTypes = '', paymentType} = req.body;
 	let {payments} = req.body;
 	
 	const defaultPayment = (amount) => ({

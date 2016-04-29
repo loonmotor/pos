@@ -58,7 +58,7 @@ sse.on('connection', connection => {
 			event : 'heartbeat',
 			data : Date.now().toString()
 		});
-	}, 5000);
+	}, 2000);
 
 	connection.on('close', () => {
 		console.log('lost connection');

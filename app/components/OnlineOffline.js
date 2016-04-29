@@ -15,7 +15,7 @@ class OnlineOffline extends Component {
 		eventSource.addEventListener('heartbeat', (event) => {
 			OnlineOfflineActionCreators.online();
 			clearTimeout(timeoutId);
-			timeoutId = setTimeout(isOffline, 7000);
+			timeoutId = setTimeout(isOffline, 4000);
 			ActionCreatorsStore.getState().forEach((actionCreator) => actionCreator());
 			OnlineOfflineActionCreators.resetActionCreators();
 		});

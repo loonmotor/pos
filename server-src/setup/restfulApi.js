@@ -99,8 +99,7 @@ restfulApi.use('Items', 'GET', (resourceName, req, res, done) => {
 					return ok(err);
 				}
 				return ok(null, count);
-			});
-		},
+			});		},
 		items : ok => {
 			db.Item
 				.find({})

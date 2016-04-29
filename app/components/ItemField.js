@@ -5,13 +5,13 @@ class ItemField extends Component {
 		this.props.handleFieldChange(field, event.target.value);
 	}
 	render () {
-		const {name, type, value, autoFocus, className, isDirtyClass, requiredClass, readOnly} = this.props;
+		const {name = '', type, value, autoFocus, className, isDirtyClass, requiredClass, readOnly, label} = this.props;
 		const style = {
 			background : readOnly ? '#ddd' : 'inherit'
 		};
 		return (
 			<div className="uk-form-row">
-				<label className="uk-form-label" htmlFor={name.toLowerCase()}>{name}</label>
+				<label className="uk-form-label" htmlFor={name.toLowerCase()}>{label || name}</label>
 				<div className="uk-form-controls">
 					<input type={type} name={name.toLowerCase()} id={name.toLowerCase()} className={className} style={style} readOnly={readOnly} value={value} onChange={this.handleFieldChange.bind(this, name.toLowerCase())} autoFocus={autoFocus} />
 					<section className={isDirtyClass}>

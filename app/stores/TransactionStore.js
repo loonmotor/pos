@@ -131,7 +131,6 @@ class TransactionStore extends ReduceStore {
 			case constants.TRANSACTION_DISPLAY_ITEM :
 				return Object.assign({}, this.getState(), {item:ItemsStore.getItem(action.itemId)});
 			case constants.DISPLAY_TRANSACTION :
-				console.log(TransactionsStore.getTransaction(action.id));
 				return Object.assign({}, this.getState(), TransactionsStore.getTransaction(action.id));
 			case constants.RESET_TRANSACTION :
 				return this.getInitialState();

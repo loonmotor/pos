@@ -14,19 +14,19 @@ class Transaction extends Component {
 		const {query} = this.props.location;
 		TransactionActionCreators.resetTransaction();
 		if (this.props.initialData && query.itemId) {
-			TransactionActionCreators.setTransactionItem(this.props.initialData);
 			TransactionActionCreators.itemEditMode();
+			TransactionActionCreators.setTransactionItem(this.props.initialData);
 		}
 		if (this.props.initialData && this.props.params.id) {
-			console.log(this.props.initialData);
-			TransactionActionCreators.setTransaction(this.props.initialData);
 			TransactionActionCreators.editMode();
+			TransactionActionCreators.setTransaction(this.props.initialData);
 		}
 		if (!this.props.initialData && this.props.params.id) {
 			setTimeout(() => {
-				TransactionActionCreators.displayTransaction(this.props.params.id);
 				TransactionActionCreators.editMode();
+				TransactionActionCreators.displayTransaction(this.props.params.id);
 			}, 0);
+
 		}
 	}
 	componentDidMount () {
@@ -132,8 +132,9 @@ class Transaction extends Component {
 		
 		return (
 			<div className="uk-grid">
-				<div className="uk-width-medium-4-5 uk-width-large-3-5 uk-container-center uk-margin-top">
+				<div className="uk-width-medium-4-5 uk-width-large-3-5 uk-container-center uk-margin-top uk-margin-large-bottom">
 					<form className="uk-form uk-form-horizontal uk-margin-large-top" method="POST" onSubmit={this.handleTransactionSubmit.bind(this, transaction)}>
+						<div className={msgClass}>{transaction.msg}</div>
 						<fieldset>
 							<legend>Buyer</legend>
 							<ItemField name="Company" type="text" value={transaction.buyer.company} handleFieldChange={this.handleBuyerFieldChange.bind(this)} autoFocus={true} className={buyerCompanyClass} isDirtyClass={isDirtyClass} requiredClass={buyerCompanyRequiredClass} />
@@ -142,21 +143,23 @@ class Transaction extends Component {
 							<ItemField name="Phone" type="number" value={transaction.buyer.phone} handleFieldChange={this.handleBuyerFieldChange.bind(this)} className={buyerPhoneClass} isDirtyClass={isDirtyClass} requiredClass={buyerPhoneRequiredClass} />
 						</fieldset>
 						<br />
-						<div className={msgClass}>{transaction.msg}</div>
 						<input name="id" type="hidden" value={transaction.id} />
 						<input name="modified" type="hidden" value={transaction.modified} />
 						<fieldset>
 							<legend>Item</legend>
-							<ItemField name="Name" type="text" value={transaction.item.name} readOnly={true} className="uk-width-1-1" requiredClass="uk-hidden" />
+							<ItemField name="ItemName" label="Item Name" type="text" value={transaction.item.name} readOnly={true} className="uk-width-1-1" requiredClass="uk-hidden" />
 							<ItemField name="Price" type="text" value={transaction.item.price} readOnly={true} className="uk-width-1-1" requiredClass="uk-hidden" />
 							<div className="uk-form-row">
 								<label className="uk-form-label" htmlFor="payment-type">Payment Types</label>
+									{Object.keys(transaction.item.paymentTypes).map(paymentType => (
+										<input type="hidden" name="paymentTypes" value={paymentType} key={paymentType} />
+									))}
 								<div className="uk-form-controls">
 									{Object.keys(transaction.item.paymentTypes).map(paymentType => {
 										if (transaction.item.paymentTypes[paymentType]) {
 											return (
 												<label key={paymentType}>
-													<input type="radio" name="paymentType" checked={paymentType === transaction.paymentType} onChange={this.handlePaymentTypeChange.bind(this, paymentType)} /> {paymentType} &nbsp;&nbsp;&nbsp;
+													<input type="radio" name="paymentType" value={paymentType} checked={paymentType === transaction.paymentType} onChange={this.handlePaymentTypeChange.bind(this, paymentType)} /> {paymentType} &nbsp;&nbsp;&nbsp;
 												</label>
 											);
 										} else {
@@ -178,7 +181,7 @@ class Transaction extends Component {
 							{transaction.payments.map((payment, index) => {
 								return (
 									<div className="uk-form-row uk-placeholder" key={payment.id}>
-										<ItemField  name={`Payment`} type="number" value={payment.amount} handleFieldChange={this.handlePaymentChange.bind(this, payment.id)} className="uk-width-1-1" requiredClass="uk-hidden" />
+										<ItemField name="payments" label={`Payment ${index+1}`} type="number" value={payment.amount} handleFieldChange={this.handlePaymentChange.bind(this, payment.id)} className="uk-width-1-1" requiredClass="uk-hidden" />
 										<div className="uk-grid">
 											<div className="uk-width-3-10">
 												{new Date(payment.modified).toLocaleDateString()} {new Date(payment.modified).toLocaleTimeString()}

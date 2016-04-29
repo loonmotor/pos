@@ -12,7 +12,6 @@ export default {
 		}).then(checkStatus);
 	},
 	deleteTransaction (id) {
-		console.log('horah');
 		return fetch('/data/transaction', {
 			method : 'DELETE',
 			headers : {

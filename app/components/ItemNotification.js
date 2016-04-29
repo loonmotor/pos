@@ -22,7 +22,6 @@ class ItemNotification extends Component {
 		}, 3000);
 	}
 	shouldComponentUpdate (nextProps, nextState) {
-		console.log(this.props.showNotification, nextProps.showNotification);
 		return this.props.showNotification !== nextProps.showNotification;
 	}
 	componentDidUpdate () {

@@ -108,20 +108,20 @@ Item.requestInitialData = ({server, client}) => {
 	if (server) {
 		const [,,id] = server.originalUrl;
 		if (id) {
-			return fetch(`http://localhost:3000/data/item/${id}`)
+			return fetch(`http://localhost:3008/data/item/${id}`)
 					.then(checkStatus);
 		}
 		return Promise.reject('Create Item');
 	}
 	if (client) {
 		const {id} = client;
-		return fetch(`http://localhost:3000/data/item/${id}`)
+		return fetch(`https://jasoncheng.ninja:3008/data/item/${id}`)
 				.then(checkStatus);
 	}
 };
 
 Item.noScriptPost = body => {
-	return fetch(`http://localhost:3000/noscript/data/item`, {
+	return fetch(`http://localhost:3008/noscript/data/item`, {
 		method : 'POST',
 		headers : {
 			'Content-Type' : 'application/json',

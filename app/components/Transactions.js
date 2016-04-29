@@ -105,16 +105,16 @@ class Transactions extends Component {
 
 Transactions.requestInitialData = ({server, client}) => {
 	if (server) {
-		return fetch(`http://localhost:3000/data/transactions`).then(response => response.json());
+		return fetch(`http://localhost:3008/data/transactions`).then(response => response.json());
 	}
 	if (client) {
 		const {offset, limit} = client;
-		return fetch(`http://localhost:3000/data/transactions/${offset}/${limit}`).then(response => response.json());
+		return fetch(`https://jasoncheng.ninja:3008/data/transactions/${offset}/${limit}`).then(response => response.json());
 	}
 };
 
 Transactions.noScriptPost = body => {
-	return fetch(`http://localhost:3000/noscript/data/transactions`, {
+	return fetch(`http://localhost:3008/noscript/data/transactions`, {
 		method : 'POST',
 		headers : {
 			'Content-Type' : 'application/json'

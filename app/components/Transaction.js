@@ -214,19 +214,19 @@ Transaction.requestInitialData = ({server, client}) => {
 	if (server) {
 		const {itemId} = server.query;
 		if (itemId) {
-			return fetch(`http://localhost:3000/data/item/${itemId}`)
+			return fetch(`http://localhost:3008/data/item/${itemId}`)
 					.then(checkStatus);
 		}
 		const [,,id] = server.originalUrl;
 		if (id) {
-			return fetch(`http://localhost:3000/data/transaction/${id}`)
+			return fetch(`http://localhost:3008/data/transaction/${id}`)
 					.then(checkStatus);
 		}
 	}
 };
 
 Transaction.noScriptPost = body => {
-	return fetch(`http://localhost:3000/noscript/data/transaction`, {
+	return fetch(`http://localhost:3008/noscript/data/transaction`, {
 		method : 'POST',
 		headers : {
 			'Content-Type' : 'application/json'

@@ -7,7 +7,7 @@ import ActionCreatorsStore from '../stores/ActionCreatorsStore';
 
 class OnlineOffline extends Component {
 	componentDidMount () {
-		const eventSource = new EventSource('/sse');
+		const eventSource = new EventSource('/pos/sse');
 		let timeoutId;
 		const isOffline = () => {
 			OnlineOfflineActionCreators.offline();

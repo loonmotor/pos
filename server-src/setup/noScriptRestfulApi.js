@@ -4,7 +4,7 @@ import async from 'async';
 import shortid from 'shortid';
 
 restfulApi.use('NoScript.Item', 'POST', (resourceName, req, res, done) => {
-	let {id, name, price, paymentTypes = ''} = req.body;
+	let {id, name, price, paymentTypes} = req.body;
 	paymentTypes = {
 		upfront : paymentTypes.indexOf('upfront') > -1,
 		downpayment : paymentTypes.indexOf('downpayment') > -1,

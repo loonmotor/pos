@@ -263,3 +263,33 @@ restfulApi.use('HeartBeat', 'GET', (resourceName, req, res, done) => {
 	done();
 
 });
+
+restfulApi.use('Home', 'GET', (resourceName, req, res, done) => {
+	async.series([
+		ok => {
+			db.Item.count({}, (err, count) => {
+				if (err) {
+					return ok(err);
+				}
+				return ok(null, count);
+			});
+		},
+		ok => {
+			db.Transaction.count({}, (err, count) => {
+				if (err) {
+					return ok(err);
+				}
+				return ok(null, count);
+			});
+		}
+	], (err, [itemCount, transactionCount]) => {
+		if (err) {
+			return done(err);
+		}
+		res.json({
+			itemCount,
+			transactionCount
+		});
+		done();
+	});
+});

@@ -48,4 +48,5 @@ node_modules
 *.json
 !package.json
 server-built
+app-built
 public/js/bundle.js

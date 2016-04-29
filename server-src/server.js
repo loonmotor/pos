@@ -13,6 +13,7 @@ import noScriptItemRoute from './routes/noScriptItem';
 import noScriptItemsRoute from './routes/noScriptItems';
 import noScriptTransactionRoute from './routes/noScriptTransaction';
 import noScriptTransactionsRoute from './routes/noScriptTransactions';
+import homeRoute from './routes/home';
 import './setup/restfulApi';
 import './setup/noScriptRestfulApi';
 import SSE from 'sse';
@@ -25,7 +26,7 @@ app.enable('trust proxy');
 app.engine('ejs', ejs.__express);
 app.set('view engine', 'ejs');
 
-// app.use(restLogger('dev'));
+app.use(restLogger('dev'));
 app.use(bodyParser.urlencoded({ extended : false, limit : '1mb' }));
 app.use(bodyParser.json({ limit : '1mb' }));
 
@@ -33,6 +34,7 @@ app.use('/data', itemRoute);
 app.use('/data', itemsRoute);
 app.use('/data', transactionRoute);
 app.use('/data', transactionsRoute);
+app.use('/data', homeRoute);
 app.use('/heart-beat', heartBeatRoute);
 app.use('/noscript/data', noScriptItemRoute);
 app.use('/noscript/data', noScriptItemsRoute);

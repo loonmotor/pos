@@ -176,7 +176,17 @@ class Transaction extends Component {
 						<fieldset>
 							<legend>Payments</legend>
 							{transaction.payments.map((payment, index) => {
-								return <ItemField key={payment.id} name={`Payment ${index+1}`} type="number" value={payment.amount} handleFieldChange={this.handlePaymentChange.bind(this, payment.id)} className="uk-width-1-1" requiredClass="uk-hidden" />
+								return (
+									<div className="uk-form-row uk-placeholder" key={payment.id}>
+										<ItemField  name={`Payment`} type="number" value={payment.amount} handleFieldChange={this.handlePaymentChange.bind(this, payment.id)} className="uk-width-1-1" requiredClass="uk-hidden" />
+										<div className="uk-grid">
+											<div className="uk-width-3-10">
+												{new Date(payment.modified).toLocaleDateString()} {new Date(payment.modified).toLocaleTimeString()}
+											</div>
+										</div>
+									</div>
+								);
+
 							})}
 							<section className={isDirtyClass}>
 								<div className={paymentLessClass}>Payment is less than total</div>

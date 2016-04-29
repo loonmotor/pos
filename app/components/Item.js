@@ -115,7 +115,7 @@ Item.requestInitialData = ({server, client}) => {
 	}
 	if (client) {
 		const {id} = client;
-		return fetch(`https://jasoncheng.ninja/pos/data/item/${id}`)
+		return fetch(`https://www.jasoncheng.ninja/pos/data/item/${id}`)
 				.then(checkStatus);
 	}
 };

@@ -109,7 +109,7 @@ Transactions.requestInitialData = ({server, client}) => {
 	}
 	if (client) {
 		const {offset, limit} = client;
-		return fetch(`https://jasoncheng.ninja/pos/data/transactions/${offset}/${limit}`).then(response => response.json());
+		return fetch(`https://www.jasoncheng.ninja/pos/data/transactions/${offset}/${limit}`).then(response => response.json());
 	}
 };
 

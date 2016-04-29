@@ -4,7 +4,7 @@ import async from 'async';
 import shortid from 'shortid';
 
 restfulApi.use('NoScript.Item', 'POST', (resourceName, req, res, done) => {
-	let {id, name, price, paymentTypes = ''} = req.body;
+	let {id, name, price, paymentTypes} = req.body;
 	paymentTypes = {
 		upfront : paymentTypes.indexOf('upfront') > -1,
 		downpayment : paymentTypes.indexOf('downpayment') > -1,
@@ -145,7 +145,7 @@ restfulApi.use('NoScript.Transactions', 'POST', (resourceName, req, res, done) =
 });
 
 restfulApi.use('NoScript.Transaction', 'POST', (resourceName, req, res, done) => {
-	const {id, modified, company, name, email, phone, price, quantity, itemname, paymentTypes, paymentType} = req.body;
+	const {id, modified, company, name, email, phone, price, quantity, itemname, paymentTypes = '', paymentType} = req.body;
 	let {payments} = req.body;
 	
 	const defaultPayment = (amount) => ({

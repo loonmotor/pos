@@ -3,6 +3,7 @@ import {Container} from 'flux/utils';
 import HomeStore from '../stores/HomeStore';
 import fetch from 'isomorphic-fetch';
 import HomeActionCreators from '../actions/HomeActionCreators';
+import {Link} from 'react-router';
 
 class Home extends Component {
 	constructor () {
@@ -13,7 +14,6 @@ class Home extends Component {
 	}
 	componentDidMount () {
 		if (!this.props.initialData) {
-			console.log('sfsdfdsf');
 			HomeActionCreators.getHome();
 		}
 	}
@@ -24,14 +24,14 @@ class Home extends Component {
 					<div className="uk-grid">
 						<div className="uk-width-3-6">
 							<div className="uk-panel uk-panel-box uk-panel-box-primary">
-								<h3 className="uk-panel-title">Items</h3>
 								<h1>{this.state.data.itemCount}</h1>
+								<h3 className="uk-panel-title"><Link to="items">Items</Link></h3>
 							</div>
 						</div>
 						<div className="uk-width-3-6">
 							<div className="uk-panel uk-panel-box uk-panel-box-primary">
-								<h3 className="uk-panel-title">Transactions</h3>
 								<h1>{this.state.data.transactionCount}</h1>
+								<h3 className="uk-panel-title"><Link to="transactions">Transactions</Link></h3>
 							</div>
 						</div>
 					</div>

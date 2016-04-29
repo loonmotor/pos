@@ -1,6 +1,6 @@
 import React from 'react';
 import {Router, browserHistory} from 'react-router';
-import routes from './app/routes';
+import routes from './app-built/routes';
 import {render} from 'react-dom';
 
 let handleCreateElement = (Component, props) => {

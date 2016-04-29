@@ -10,6 +10,22 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _utils = require('flux/utils');
+
+var _HomeStore = require('../stores/HomeStore');
+
+var _HomeStore2 = _interopRequireDefault(_HomeStore);
+
+var _isomorphicFetch = require('isomorphic-fetch');
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+var _HomeActionCreators = require('../actions/HomeActionCreators');
+
+var _HomeActionCreators2 = _interopRequireDefault(_HomeActionCreators);
+
+var _reactRouter = require('react-router');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24,19 +40,78 @@ var Home = function (_Component) {
 	function Home() {
 		_classCallCheck(this, Home);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(Home).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Home).apply(this, arguments));
+
+		if (_this.props.initialData) {
+			_HomeActionCreators2.default.setHome(_this.props.initialData);
+		}
+		return _this;
 	}
 
 	_createClass(Home, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			if (!this.props.initialData) {
+				_HomeActionCreators2.default.getHome();
+			}
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
 				'div',
-				null,
+				{ className: 'uk-grid uk-text-center' },
 				_react2.default.createElement(
-					'h5',
-					null,
-					'In home'
+					'div',
+					{ className: 'uk-width-medium-4-5 uk-width-large-3-5 uk-container-center uk-margin-top' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'uk-grid' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'uk-width-3-6' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'uk-panel uk-panel-box uk-panel-box-primary' },
+								_react2.default.createElement(
+									'h1',
+									null,
+									this.state.data.itemCount
+								),
+								_react2.default.createElement(
+									'h3',
+									{ className: 'uk-panel-title' },
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: 'items' },
+										'Items'
+									)
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'uk-width-3-6' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'uk-panel uk-panel-box uk-panel-box-primary' },
+								_react2.default.createElement(
+									'h1',
+									null,
+									this.state.data.transactionCount
+								),
+								_react2.default.createElement(
+									'h3',
+									{ className: 'uk-panel-title' },
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: 'transactions' },
+										'Transactions'
+									)
+								)
+							)
+						)
+					)
 				)
 			);
 		}
@@ -45,4 +120,25 @@ var Home = function (_Component) {
 	return Home;
 }(_react.Component);
 
-exports.default = Home;
+Home.requestInitialData = function (_ref) {
+	var server = _ref.server;
+	var client = _ref.client;
+
+	if (server) {
+		return (0, _isomorphicFetch2.default)('http://localhost:3000/data/home').then(function (response) {
+			return response.json();
+		});
+	}
+};
+
+Home.getStores = function () {
+	return [_HomeStore2.default];
+};
+
+Home.calculateState = function (prevState) {
+	return {
+		data: _HomeStore2.default.getState()
+	};
+};
+
+exports.default = _utils.Container.create(Home);

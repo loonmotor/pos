@@ -21,10 +21,14 @@ class HomeStore extends ReduceStore {
 			case constants.GET_HOME :
 				return update(this.getState(), {
 					itemCount : {
-						$set : ItemsStore.getState().items.length
+						$apply : value => {
+							return ItemsStore.getState().items.length > 0 ? ItemsStore.getState().items.length : value;
+						}
 					},
 					transactionCount : {
-						$set : TransactionsStore.getState().transactions.length
+						$apply : value => {
+							return TransactionsStore.getState().transactions.length > 0 ? TransactionsStore.getState().transactions.length : value;
+						}
 					}
 				});
 			default :

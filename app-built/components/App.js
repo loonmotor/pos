@@ -20,6 +20,14 @@ var _reactBreadcrumbs = require('react-breadcrumbs');
 
 var _reactBreadcrumbs2 = _interopRequireDefault(_reactBreadcrumbs);
 
+var _Notification = require('./Notification');
+
+var _Notification2 = _interopRequireDefault(_Notification);
+
+var _OnlineOffline = require('./OnlineOffline');
+
+var _OnlineOffline2 = _interopRequireDefault(_OnlineOffline);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -56,14 +64,19 @@ var App = function (_Component) {
 								'div',
 								{ className: 'uk-width-1-3' },
 								_react2.default.createElement(
-									_reactRouter.Link,
-									{ to: '/' },
+									'div',
+									null,
 									_react2.default.createElement(
-										'span',
-										{ className: 'uk-badge uk-badge-success uk-text-large' },
-										'POS'
+										_reactRouter.Link,
+										{ to: '' },
+										_react2.default.createElement(
+											'span',
+											{ className: 'uk-badge uk-badge-success uk-text-large' },
+											'POS'
+										)
 									)
-								)
+								),
+								_react2.default.createElement(_OnlineOffline2.default, null)
 							),
 							_react2.default.createElement(
 								'div',
@@ -96,7 +109,8 @@ var App = function (_Component) {
 							)
 						)
 					)
-				)
+				),
+				_react2.default.createElement(_Notification2.default, null)
 			);
 		}
 	}]);

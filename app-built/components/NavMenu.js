@@ -33,43 +33,107 @@ var NavMenu = function (_Component) {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
-				'ul',
-				{ className: 'uk-subnav uk-subnav-pill uk-float-right' },
+				'div',
+				null,
 				_react2.default.createElement(
-					'li',
-					{ 'data-uk-dropdown': '{mode:\'click\'}' },
+					'ul',
+					{ className: 'uk-subnav uk-subnav-pill uk-float-right noscript-hide' },
 					_react2.default.createElement(
-						'a',
-						{ href: '#' },
-						'Actions ',
-						_react2.default.createElement('i', { className: 'uk-icon-angle-down' })
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'uk-dropdown uk-dropdown-small' },
+						'li',
+						{ 'data-uk-dropdown': '{mode:\'click\'}' },
 						_react2.default.createElement(
-							'ul',
-							{ className: 'uk-nav uk-nav-dropdown' },
+							'a',
+							{ href: '#' },
+							'Create ',
+							_react2.default.createElement('i', { className: 'uk-icon-angle-down' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'uk-dropdown uk-dropdown-small' },
 							_react2.default.createElement(
-								'li',
-								null,
+								'ul',
+								{ className: 'uk-nav uk-nav-dropdown' },
 								_react2.default.createElement(
-									_reactRouter.Link,
-									{ to: '/' },
-									_react2.default.createElement('i', { className: 'uk-icon-folder-o' }),
-									' action1'
-								)
-							),
-							_react2.default.createElement(
-								'li',
-								null,
-								_react2.default.createElement(
-									_reactRouter.Link,
-									{ to: '/' },
-									_react2.default.createElement('i', { className: 'uk-icon-folder-o' }),
-									' action2'
+									'li',
+									null,
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: 'item' },
+										_react2.default.createElement('i', { className: 'uk-icon-plus-square' }),
+										'   Item'
+									),
+									' '
 								)
 							)
+						)
+					),
+					_react2.default.createElement(
+						'li',
+						{ 'data-uk-dropdown': '{mode:\'click\'}' },
+						_react2.default.createElement(
+							'a',
+							{ href: '#' },
+							'Manage ',
+							_react2.default.createElement('i', { className: 'uk-icon-angle-down' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'uk-dropdown uk-dropdown-small' },
+							_react2.default.createElement(
+								'ul',
+								{ className: 'uk-nav uk-nav-dropdown' },
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: 'items' },
+										_react2.default.createElement('i', { className: 'uk-icon-archive' }),
+										'   Items'
+									)
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: 'transactions' },
+										_react2.default.createElement('i', { className: 'uk-icon-credit-card' }),
+										'  Transactions'
+									)
+								)
+							)
+						)
+					)
+				),
+				_react2.default.createElement(
+					'ul',
+					{ className: 'uk-subnav uk-subnav-line uk-float-right noscript-show' },
+					_react2.default.createElement(
+						'li',
+						{ className: 'uk-active' },
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ to: '/item' },
+							'Create Item'
+						)
+					),
+					_react2.default.createElement(
+						'li',
+						null,
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ to: '/items' },
+							'Manage Items'
+						)
+					),
+					_react2.default.createElement(
+						'li',
+						null,
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ to: '/transactions' },
+							'Manage Transactions'
 						)
 					)
 				)

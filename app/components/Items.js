@@ -109,7 +109,7 @@ Items.requestInitialData = ({server, client}) => {
 	}
 	if (client) {
 		const {offset, limit} = client;
-		return fetch(`https://jasoncheng.ninja:3008/pos/data/items/${offset}/${limit}`).then(response => response.json());
+		return fetch(`https://jasoncheng.ninja/pos/data/items/${offset}/${limit}`).then(response => response.json());
 	}
 };
 

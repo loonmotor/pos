@@ -108,14 +108,14 @@ Item.requestInitialData = ({server, client}) => {
 	if (server) {
 		const [,,id] = server.originalUrl;
 		if (id) {
-			return fetch(`http://localhost:3008/data/item/${id}`)
+			return fetch(`http://localhost/data/item/${id}`)
 					.then(checkStatus);
 		}
 		return Promise.reject('Create Item');
 	}
 	if (client) {
 		const {id} = client;
-		return fetch(`https://jasoncheng.ninja:3008/pos/data/item/${id}`)
+		return fetch(`https://jasoncheng.ninja/pos/data/item/${id}`)
 				.then(checkStatus);
 	}
 };

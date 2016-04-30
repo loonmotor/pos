@@ -1,7 +1,7 @@
 import express from 'express';
 import React from 'react';
 import {match, RouterContext} from 'react-router';
-import routes from '../../app-built/routes';
+import routes from '../../app/routes';
 import {renderToString} from 'react-dom/server';
 import fs from 'fs';
 

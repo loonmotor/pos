@@ -13,9 +13,7 @@ class Home extends Component {
 		}
 	}
 	componentDidMount () {
-		if (!this.props.initialData) {
-			HomeActionCreators.getHome();
-		}
+		HomeActionCreators.getHome();
 	}
 	render () {
 		return (

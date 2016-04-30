@@ -76,13 +76,13 @@ class Transactions extends Component {
 								{transactions.map((transaction, index) => (
 									<tr key={transaction.id}>
 										<td>{index + 1 + offset * limit}</td>
-										<td>{new Date(transaction.modified).toLocaleDateString()}</td>
+										<td>{new Date(Number(transaction.modified)).toLocaleDateString()}</td>
 										<td>{transaction.buyer.company}</td>
 										<td>{transaction.item.name}</td>
 										<td>{transaction.quantity}</td>
 										<td>{transaction.item.price * transaction.quantity}</td>
 										<td>{transaction.paymentType}</td>
-										<td>{transaction.payments.reduce((acc, payment) => acc + payment.amount, 0)}</td>
+										<td>{transaction.payments.reduce((acc, payment) => acc + Number(payment.amount), 0)}</td>
 										<td className="uk-text-center">{transaction.payments.reduce((acc, payment) => acc + payment.amount, 0) >= transaction.item.price * transaction.quantity ? (<div className="uk-badge uk-badge-success">Paid</div>) : (<div className="uk-badge uk-badge-danger">Outstanding</div>)}</td>
 										<td>
 											<div className="uk-button-group">

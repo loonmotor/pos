@@ -188,7 +188,7 @@ restfulApi.use('NoScript.Transaction', 'POST', (resourceName, req, res, done) =>
 
 	switch (paymentType) {
 		case 'upfront' :
-			if (payments.length === 0) {
+			if (doc.payments.length === 0) {
 				doc.payments.push(defaultPayment(0));
 			}
 			doc.payments.splice(1);
@@ -220,7 +220,6 @@ restfulApi.use('NoScript.Transaction', 'POST', (resourceName, req, res, done) =>
 			isPaymentLess = false;
 			break;
 		case 'downpayment' :
-			console.log(doc.payments[1].amount);
 			isPaymentLess = Number(doc.payments[1].amount) && paymentTotal < total;
 			break;
 		case 'upfront' :

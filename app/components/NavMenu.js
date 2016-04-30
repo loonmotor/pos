@@ -25,7 +25,7 @@ class NavMenu extends Component {
 					</li>
 				</ul>
 				<ul className="uk-subnav uk-subnav-line uk-float-right noscript-show">
-	                <li className="uk-active"><Link to="/item">Create Item</Link></li>
+	                <li className="uk-active"><Link to="item">Create Item</Link></li>
 	                <li><Link to="items">Manage Items</Link></li>
 	                <li><Link to="transactions">Manage Transactions</Link></li>
 	            </ul>

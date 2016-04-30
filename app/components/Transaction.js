@@ -14,8 +14,13 @@ class Transaction extends Component {
 		const {query} = this.props.location;
 		TransactionActionCreators.resetTransaction();
 		if (this.props.initialData && query.itemId) {
-			TransactionActionCreators.itemEditMode();
-			TransactionActionCreators.setTransactionItem(this.props.initialData);
+			if (this.props.initialData.modified) {
+				TransactionActionCreators.editMode();
+				TransactionActionCreators.setTransaction(this.props.initialData);
+			} else {
+				TransactionActionCreators.itemEditMode();
+				TransactionActionCreators.setTransactionItem(this.props.initialData);
+			}
 		}
 		if (this.props.initialData && this.props.params.id) {
 			TransactionActionCreators.editMode();

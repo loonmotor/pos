@@ -151,7 +151,7 @@ restfulApi.use('Transaction', 'POST', (resourceName, req, res, done) => {
 	if (!quantity) { errors.quantity = 'Quantity is required'; }
 	if (!paymentType) { errors.paymentType = 'Payment type is required'; }
 	if (!payments) { errors.payments = 'Payments is required'; }
-	const paymentAmount = payments.reduce((acc, payment) => acc + payment.amount, 0);
+	const paymentAmount = payments.reduce((acc, payment) => Number(acc) + Number(payment.amount), 0);
 	const itemAmount = quantity * item.price;
 	if (paymentType === 'upfront' && paymentAmount < itemAmount) { errors.upfront = "Payment is less than total"; }
 	if (paymentAmount > itemAmount) { errors.upfront = "Payment is more than total"; }

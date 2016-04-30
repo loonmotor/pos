@@ -188,13 +188,22 @@ class TransactionStore extends ReduceStore {
 				let total = nextState.item.price * nextState.quantity;
 				let paymentTotal = nextState.payments.reduce((acc, payment) => acc + payment.amount, 0);
 
-				if (nextState.paymentType === 'upfront') {
+				if (paymentTotal > total) {
 					return update(nextState, {
 						error : {
 							payment : {
 								exceed : {
 									$set : paymentTotal > total
-								},
+								}
+							}
+						}
+					});
+				}
+
+				if (nextState.paymentType === 'upfront') {
+					return update(nextState, {
+						error : {
+							payment : {
 								less : {
 									$set : paymentTotal < total
 								}
@@ -206,22 +215,8 @@ class TransactionStore extends ReduceStore {
 					nextState = update(nextState, {
 						error : {
 							payment : {
-								exceed : {
-									$set : paymentTotal > total
-								},
 								less : {
 									$set : paymentTotal < total
-								}
-							}
-						}
-					});
-				}
-				if (nextState.paymentType === 'multiplepayments') {
-					nextState = update(nextState, {
-						error : {
-							payment : {
-								exceed : {
-									$set : paymentTotal > total
 								}
 							}
 						}
@@ -283,13 +278,21 @@ class TransactionStore extends ReduceStore {
 				});
 				total = nextState.item.price * nextState.quantity;
 				paymentTotal = nextState.payments.reduce((acc, payment) => acc + payment.amount, 0);
-				if (nextState.paymentType === 'upfront') {
+				if (paymentTotal > total) {
 					nextState = update(nextState, {
 						error : {
 							payment : {
 								exceed : {
 									$set : paymentTotal > total
-								},
+								}
+							}
+						}
+					});
+				}
+				if (nextState.paymentType === 'upfront') {
+					nextState = update(nextState, {
+						error : {
+							payment : {
 								less : {
 									$set : paymentTotal < total
 								}
@@ -301,22 +304,8 @@ class TransactionStore extends ReduceStore {
 					nextState = update(nextState, {
 						error : {
 							payment : {
-								exceed : {
-									$set : paymentTotal > total
-								},
 								less : {
 									$set : paymentTotal < total
-								}
-							}
-						}
-					});
-				}
-				if (nextState.paymentType === 'multiplepayments') {
-					nextState = update(nextState, {
-						error : {
-							payment : {
-								exceed : {
-									$set : paymentTotal > total
 								}
 							}
 						}

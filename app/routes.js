@@ -10,7 +10,7 @@ import Transactions from './components/Transactions';
 
 export default (
 	<Route path="/" component={App} name="Home">
-		<Route path="/pos" component={Home} />
+		<IndexRoute component={Home} />
 		<Route path="item" component={Item} name="Create Item" />
 		<Route path="item/:id" component={Item} name="Edit Item" />
 		<Route path="items" component={Items} name="Manage Items" />

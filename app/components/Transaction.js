@@ -138,7 +138,7 @@ class Transaction extends Component {
 		return (
 			<div className="uk-grid">
 				<div className="uk-width-medium-4-5 uk-width-large-3-5 uk-container-center uk-margin-top uk-margin-large-bottom">
-					<form className="uk-form uk-form-horizontal uk-margin-large-top" method="POST" onSubmit={this.handleTransactionSubmit.bind(this, transaction)}>
+					<form className="uk-form uk-form-horizontal uk-margin-large-top" method="POST" onSubmit={this.handleTransactionSubmit.bind(this, transaction)} noValidate>
 						<div className={msgClass}>{transaction.msg}</div>
 						<fieldset>
 							<legend>Buyer</legend>

@@ -1,16 +1,21 @@
 import AppDispatcher from '../AppDispatcher';
 import constants from '../constants';
 
-export default {
+const actionCreators = {
 	setHome (home) {
 		AppDispatcher.dispatch({
 			type : constants.SET_HOME,
 			home
 		});
 	},
-	getHome () {
-		AppDispatcher.dispatch({
-			type : constants.GET_HOME
-		});
+	fetchHome (api) {
+		let fetchHomeBinded = actionCreators.fetchHome.bind(null, api);
+		AppDispatcher.dispatchAsync(api(), {
+			request : constants.FETCH_HOME,
+			success : constants.FETCH_HOME_SUCCESS,
+			error   : constants.FETCH_HOME_ERROR
+		}, null, fetchHomeBinded);
 	}
 };
+
+export default actionCreators;

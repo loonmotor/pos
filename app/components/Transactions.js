@@ -7,6 +7,7 @@ import fetch from 'isomorphic-fetch';
 import ReactPaginate from 'react-paginate';
 import {Link} from 'react-router';
 import classNames from 'classnames';
+import {host} from '../config';
 
 class Transactions extends Component {
 	constructor () {
@@ -109,7 +110,7 @@ Transactions.requestInitialData = ({server, client}) => {
 	}
 	if (client) {
 		const {offset, limit} = client;
-		return fetch(`http://localhost:3000/data/transactions/${offset}/${limit}`).then(response => response.json());
+		return fetch(`${host}/data/transactions/${offset}/${limit}`).then(response => response.json());
 	}
 };
 

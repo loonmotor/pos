@@ -7,6 +7,7 @@ import fetch from 'isomorphic-fetch';
 import ReactPaginate from 'react-paginate';
 import {Link} from 'react-router';
 import classNames from 'classnames';
+import {host} from '../config';
 
 class Items extends Component {
 	constructor () {
@@ -109,7 +110,7 @@ Items.requestInitialData = ({server, client}) => {
 	}
 	if (client) {
 		const {offset, limit} = client;
-		return fetch(`https://www.jasoncheng.ninja/pos/data/items/${offset}/${limit}`).then(response => response.json());
+		return fetch(`${host}/data/items/${offset}/${limit}`).then(response => response.json());
 	}
 };
 

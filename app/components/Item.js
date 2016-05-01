@@ -7,6 +7,7 @@ import ItemField from './ItemField';
 import ItemCheckbox from './ItemCheckbox';
 import fetch from 'isomorphic-fetch';
 import {checkStatus} from '../utils';
+import {config} from '../config';
 
 class Item extends Component {
 	constructor () {
@@ -115,7 +116,7 @@ Item.requestInitialData = ({server, client}) => {
 	}
 	if (client) {
 		const {id} = client;
-		return fetch(`https://www.jasoncheng.ninja/pos/data/item/${id}`)
+		return fetch(`${host}/data/item/${id}`)
 				.then(checkStatus);
 	}
 };

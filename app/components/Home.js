@@ -4,6 +4,7 @@ import HomeStore from '../stores/HomeStore';
 import fetch from 'isomorphic-fetch';
 import HomeActionCreators from '../actions/HomeActionCreators';
 import {Link} from 'react-router';
+import {host} from '../config';
 
 class Home extends Component {
 	constructor () {
@@ -46,7 +47,7 @@ Home.requestInitialData = ({server, client}) => {
 		return fetch(`http://localhost:3008/data/home`).then(response => response.json());
 	}
 	if (client) {
-		return fetch(`http://localhost:3000/data/home`).then(response => response.json());
+		return fetch(`${host}/data/home`).then(response => response.json());
 	}
 };
 

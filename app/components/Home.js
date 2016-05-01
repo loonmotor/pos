@@ -13,7 +13,9 @@ class Home extends Component {
 		}
 	}
 	componentDidMount () {
-		HomeActionCreators.getHome();
+		if (!this.props.initialData) {
+			HomeActionCreators.fetchHome(Home.requestInitialData.bind(null, {client:{}}));
+		}
 	}
 	render () {
 		return (
@@ -41,6 +43,9 @@ class Home extends Component {
 
 Home.requestInitialData = ({server, client}) => {
 	if (server) {
+		return fetch(`http://localhost:3000/data/home`).then(response => response.json());
+	}
+	if (client) {
 		return fetch(`http://localhost:3000/data/home`).then(response => response.json());
 	}
 };

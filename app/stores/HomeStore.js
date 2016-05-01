@@ -18,17 +18,56 @@ class HomeStore extends ReduceStore {
 				return update(this.getState(), {
 					$set : action.home 
 				});
-			case constants.GET_HOME :
+			case constants.FETCH_HOME_SUCCESS :
+				return update(this.getState(), {
+					$set : action.payload.response
+				});
+			case constants.SET_ITEMS :
 				return update(this.getState(), {
 					itemCount : {
-						$apply : value => {
-							return ItemsStore.getState().items.length > 0 ? ItemsStore.getState().items.length : value;
-						}
-					},
+						$set : action.data.items.length
+					}
+				});
+			case constants.SET_TRANSACTIONS :
+				return update(this.getState(), {
 					transactionCount : {
-						$apply : value => {
-							return TransactionsStore.getState().transactions.length > 0 ? TransactionsStore.getState().transactions.length : value;
-						}
+						$set : action.data.transactions.length 
+					}
+				});
+			case constants.SUBMIT_ITEM :
+				return update(this.getState(), {
+					itemCount : {
+						$apply : value => ++value
+					}
+				});
+			case constants.SUBMIT_TRANSACTION :
+				return update(this.getState(), {
+					transactionCount : {
+						$apply : value => ++value
+					}
+				});
+			case constants.SUBMIT_ITEM_ERROR :
+				return update(this.getState(), {
+					itemCount : {
+						$apply : value => --value
+					}
+				});
+			case constants.SUBMIT_TRANSACTION_ERROR :
+				return update(this.getState(), {
+					transactionCount : {
+						$apply : value => --value
+					}
+				});
+			case constants.DELETE_ITEM :
+				return update(this.getState(), {
+					itemCount : {
+						$apply : value => --value
+					}
+				});
+			case constants.DELETE_TRANSACTION :
+				return update(this.getState(), {
+					transactionCount : {
+						$apply : value => --value
 					}
 				});
 			default :

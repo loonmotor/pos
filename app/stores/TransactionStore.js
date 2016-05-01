@@ -186,7 +186,7 @@ class TransactionStore extends ReduceStore {
 					}
 				});
 				let total = nextState.item.price * nextState.quantity;
-				let paymentTotal = nextState.payments.reduce((acc, payment) => acc + payment.amount, 0);
+				let paymentTotal = nextState.payments.reduce((acc, payment) => acc + Number(payment.amount), 0);
 
 				if (paymentTotal > total) {
 					return update(nextState, {
@@ -277,7 +277,7 @@ class TransactionStore extends ReduceStore {
 					}
 				});
 				total = nextState.item.price * nextState.quantity;
-				paymentTotal = nextState.payments.reduce((acc, payment) => acc + payment.amount, 0);
+				paymentTotal = nextState.payments.reduce((acc, payment) => acc + Number(payment.amount), 0);
 				if (paymentTotal > total) {
 					nextState = update(nextState, {
 						error : {

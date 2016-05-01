@@ -67,7 +67,7 @@ class Item extends Component {
 		return (
 			<div className="uk-grid">
 				<div className="uk-width-medium-4-5 uk-width-large-3-5 uk-container-center uk-margin-top">
-					<form className="uk-form uk-form-horizontal uk-margin-large-top" method="POST" onSubmit={this.handleItemSubmit.bind(this, this.state.item)}>
+					<form className="uk-form uk-form-horizontal uk-margin-large-top" method="POST" onSubmit={this.handleItemSubmit.bind(this, this.state.item)} noValidate>
 						<fieldset>
 							<legend>Create Item</legend>
 

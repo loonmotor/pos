@@ -1,6 +1,5 @@
 const
-	LiveReloadPlugin = require('webpack-livereload-plugin')
-	, webpack = require('webpack');
+	LiveReloadPlugin = require('webpack-livereload-plugin');
 
 module.exports = {
 	entry: [
@@ -18,11 +17,6 @@ module.exports = {
 		}]
 	},
 	plugins : [
-		new webpack.DefinePlugin({
-		  "process.env": { 
-		     NODE_ENV: JSON.stringify("production") 
-		   }
-		}),
 		new LiveReloadPlugin()
 	]
 };

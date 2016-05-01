@@ -30,7 +30,7 @@ class App extends Component {
 											 params={this.props.params}
 											 separator=""
 											 setDocumentTitle={true}
-											 customClass="uk-breadcrumb"
+											 customClass="uk-breadcrumb noscript-hide"
 											 wrapperElement="ul"
 											 itemElement="li" />
 							</div>

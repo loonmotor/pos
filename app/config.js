@@ -1,1 +1,1 @@
-export const host = 'https://localhost:3000';
+export const host = 'https://www.jasoncheng.ninja/pos';

@@ -72,7 +72,7 @@ class Items extends Component {
 									<tr key={item.id}>
 										<td>{index + 1 + offset * limit}</td>
 										<td>{item.name}</td>
-										<td>{item.price}</td>
+										<td>{Number(item.price).toFixed(2)}</td>
 										<td className="uk-text-center">
 											<div className="uk-button-group">
 												<Link to={`item/${item.id}`} className="uk-button uk-button-mini"><i className="uk-icon-edit"></i> Edit</Link>

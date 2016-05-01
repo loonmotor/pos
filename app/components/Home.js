@@ -13,10 +13,7 @@ class Home extends Component {
 		}
 	}
 	componentDidMount () {
-		if (!this.props.initialData) {
-			console.log('no lor');
-			HomeActionCreators.getHome();
-		}
+		HomeActionCreators.getHome();
 	}
 	render () {
 		return (

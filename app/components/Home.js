@@ -13,6 +13,10 @@ class Home extends Component {
 		}
 	}
 	componentDidMount () {
+		if (this.props.initialData) {
+			console.log(this.props.initialData);
+			HomeActionCreators.setHome(this.props.initialData);
+		}
 		if (!this.props.initialData) {
 			HomeActionCreators.getHome();
 		}

@@ -35,17 +35,23 @@ class HomeStore extends ReduceStore {
 					}
 				});
 			case constants.SUBMIT_ITEM :
-				return update(this.getState(), {
-					itemCount : {
-						$apply : value => ++value
-					}
-				});
+				if (action.payload.editMode === false) {
+					return update(this.getState(), {
+						itemCount : {
+							$apply : value => ++value
+						}
+					});
+				}
+				return state;
 			case constants.SUBMIT_TRANSACTION :
-				return update(this.getState(), {
-					transactionCount : {
-						$apply : value => ++value
-					}
-				});
+				if (action.payload.editMode === false) {
+					return update(this.getState(), {
+						transactionCount : {
+							$apply : value => ++value
+						}
+					});
+				}
+				return state;
 			case constants.SUBMIT_ITEM_ERROR :
 				return update(this.getState(), {
 					itemCount : {

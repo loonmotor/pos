@@ -15,7 +15,7 @@ class Home extends Component {
 	}
 	componentDidMount () {
 		if (!this.props.initialData) {
-			HomeActionCreators.fetchHome(Home.requestInitialData.bind(null, {client:{}}));
+			// HomeActionCreators.fetchHome(Home.requestInitialData.bind(null, {client:{}}));
 		}
 	}
 	render () {

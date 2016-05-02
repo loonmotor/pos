@@ -18,6 +18,12 @@ class Items extends Component {
 	}
 	componentDidMount () {
 		const {meta:{offset, limit}} = this.state.data;
+		if (this.props.initialData) {
+			console.log('xyz');
+			setTimeout(() => {
+				ItemsActionCreators.setItemsWithLimit();
+			}, 0);
+		}
 		if (!this.props.initialData) {
 			ItemsActionCreators.fetchItems(Items.requestInitialData.bind(null, {client : {offset, limit}}));
 		}

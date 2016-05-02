@@ -44,7 +44,7 @@ class TransactionsStore extends ReduceStore {
 			case constants.SET_TRANSACTIONS :
 				return update(this.getState(), {
 					transactions : {
-						$set : action.data.transactions.splice(0, this.getState().meta.limit)
+						$set : action.data.transactions
 					},
 					meta : {
 						count : {
@@ -53,6 +53,12 @@ class TransactionsStore extends ReduceStore {
 						pageNum : {
 							$set : Math.ceil(action.data.count / this.getState().meta.limit)
 						}
+					}
+				});
+			case constants.SET_TRANSACTIONS_WITH_LIMIT :
+				return update(this.getState(), {
+					transactions : {
+						$set : this.getState().transactions.splice(0, this.getState().meta.limit)
 					}
 				});
 			case constants.TRANSACTIONS_SET_PAGINATION_OFFSET :

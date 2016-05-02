@@ -44,7 +44,7 @@ class ItemsStore extends ReduceStore {
 			case constants.SET_ITEMS :
 				return update(this.getState(), {
 					items : {
-						$set : action.data.items.splice(0, this.getState().meta.limit)
+						$set : action.data.items
 					},
 					meta : {
 						count : {
@@ -53,6 +53,12 @@ class ItemsStore extends ReduceStore {
 						pageNum : {
 							$set : Math.ceil(action.data.count / this.getState().meta.limit)
 						}
+					}
+				});
+			case constants.SET_ITEMS_WITH_LIMIT :
+				return update(this.getState(), {
+					items : {
+						$set : this.getState().items.splice(0, this.getState().meta.limit)
 					}
 				});
 			case constants.SET_PAGINATION_OFFSET :

@@ -99,6 +99,17 @@ class Transactions extends Component {
 						</table>
 					</div>
 				</div>
+				<div className={paginationClass}>
+					<div className="uk-width-medium-4-5 uk-width-large-4-5 uk-container-center uk-margin-large-bottom">
+						<ReactPaginate previousLabel={"Previous"}
+									   nextLabel={"Next"}
+									   pageNum={pageNum}
+									   marginPagesDisplayed={15}
+									   clickCallback={this.handlePageClick.bind(this)}
+									   containerClassName={"uk-pagination"}
+									   activeClassName={"uk-active"} />
+					</div>
+				</div>
 			</div>
 		);
 	}

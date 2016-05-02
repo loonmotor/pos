@@ -109,7 +109,7 @@ Item.requestInitialData = ({server, client}) => {
 	if (server) {
 		const [,,,id] = server.originalUrl;
 		if (id) {
-			return fetch(`http://localhost/data/item/${id}`)
+			return fetch(`http://localhost:3008/data/item/${id}`)
 					.then(checkStatus);
 		}
 		return Promise.reject('Create Item');

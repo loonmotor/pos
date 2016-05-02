@@ -17,6 +17,11 @@ const actionCreators = {
 			data
 		})
 	},
+	setTransactionsWithLimit () {
+		AppDispatcher.dispatch({
+			type : constants.SET_TRANSACTIONS_WITH_LIMIT,
+		});
+	},
 	setPaginationOffset (offset) {
 		AppDispatcher.dispatch({
 			type : constants.TRANSACTIONS_SET_PAGINATION_OFFSET,

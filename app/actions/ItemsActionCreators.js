@@ -17,6 +17,11 @@ const actionCreators = {
 			data
 		});
 	},
+	setItemsWithLimit () {
+		AppDispatcher.dispatch({
+			type : constants.SET_ITEMS_WITH_LIMIT
+		});
+	},
 	setPaginationOffset (offset) {
 		AppDispatcher.dispatch({
 			type : constants.SET_PAGINATION_OFFSET,

@@ -18,6 +18,11 @@ class Transactions extends Component {
 	}
 	componentDidMount () {
 		const {meta:{offset, limit}} = this.state.data;
+		if (this.props.initialData) {
+			setTimeout(() => {
+				TransactionsActionCreators.setTransactionsWithLimit();
+			}, 0);
+		}
 		if (!this.props.initialData) {
 			TransactionsActionCreators.fetchTransactions(Transactions.requestInitialData.bind(null, {client : {offset, limit}}));
 		}

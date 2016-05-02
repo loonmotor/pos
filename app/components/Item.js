@@ -107,7 +107,7 @@ class Item extends Component {
 
 Item.requestInitialData = ({server, client}) => {
 	if (server) {
-		const [,,id] = server.originalUrl;
+		const [,,,id] = server.originalUrl;
 		if (id) {
 			return fetch(`http://localhost/data/item/${id}`)
 					.then(checkStatus);

@@ -44,7 +44,10 @@ class Home extends Component {
 
 Home.requestInitialData = ({server, client}) => {
 	if (server) {
-		return fetch(`http://localhost:3000/data/home`).then(response => response.json());
+		return fetch(`http://localhost:3008/data/home`).then(response => response.json());
+	}
+	if (client) {
+		return fetch(`${host}/data/home`).then(response => response.json());
 	}
 	if (client) {
 		return fetch(`${host}/data/home`).then(response => response.json());

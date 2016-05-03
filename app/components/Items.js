@@ -112,7 +112,7 @@ class Items extends Component {
 
 Items.requestInitialData = ({server, client}) => {
 	if (server) {
-		return fetch(`http://localhost:3000/data/items`).then(response => response.json());
+		return fetch(`http://localhost:3008/data/items`).then(response => response.json());
 	}
 	if (client) {
 		const {offset, limit} = client;
@@ -121,7 +121,7 @@ Items.requestInitialData = ({server, client}) => {
 };
 
 Items.noScriptPost = body => {
-	return fetch(`http://localhost:3000/noscript/data/items`, {
+	return fetch(`http://localhost:3008/noscript/data/items`, {
 		method : 'POST',
 		headers : {
 			'Content-Type' : 'application/json'

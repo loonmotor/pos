@@ -125,7 +125,7 @@ Home.requestInitialData = function (_ref) {
 	var client = _ref.client;
 
 	if (server) {
-		return (0, _isomorphicFetch2.default)('http://localhost:3000/data/home').then(function (response) {
+		return (0, _isomorphicFetch2.default)('http://localhost:3008/data/home').then(function (response) {
 			return response.json();
 		});
 	}

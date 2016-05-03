@@ -3,7 +3,7 @@ import {checkStatus} from '../utils';
 
 export default {
 	submitTransaction (transaction) {
-		return fetch('/data/transaction', {
+		return fetch('data/transaction', {
 			method : 'POST',
 			headers : {
 				'Content-Type' : 'application/json'
@@ -12,7 +12,7 @@ export default {
 		}).then(checkStatus);
 	},
 	deleteTransaction (id) {
-		return fetch('/data/transaction', {
+		return fetch('data/transaction', {
 			method : 'DELETE',
 			headers : {
 				'Content-Type' : 'application/json'

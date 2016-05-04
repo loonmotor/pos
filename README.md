@@ -21,6 +21,7 @@ Demo https://www.jasoncheng.ninja/pos
 **Use Cases**
 - Create Item
 - Create Transaction
+- Create Payments
 - Manage Items (Listing, Edit and Delete)
 - Manage Transactions (Listing, Edit and Delete)
-- Create Payments
+- Manage Payments

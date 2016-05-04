@@ -1,6 +1,6 @@
 Demo https://www.jasoncheng.ninja/pos
 
-Technology Stack
+**Technology Stack**
 - UIKit CSS Framework
 - ReactJS
 - React Isomorphic
@@ -11,14 +11,14 @@ Technology Stack
 - NginX
 - Webpack
 
-Features
+**Features**
 - Single Page Application
 - Deep Linking
 - Isomorphic JavaScript
 - Offline Capabilities
 - No JavaScript Capabilities
 
-Use Cases
+**Use Cases**
 - Create Item
 - Create Transaction
 - Manage Items (Listing, Edit and Delete)

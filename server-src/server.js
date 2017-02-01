@@ -25,6 +25,7 @@ app.enable('trust proxy');
 
 app.engine('ejs', ejs.__express);
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../views'));
 
 app.use(restLogger('dev'));
 app.use(bodyParser.urlencoded({ extended : false, limit : '1mb' }));
